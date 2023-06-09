@@ -1,0 +1,22 @@
+.main-page-padding {
+    margin-left: 0;
+    margin-right: 0
+}
+
+.page-background {
+    background-color: #f7f7f7
+}
+
+@media screen and (min-width: 992px) {
+  .main-page-padding {
+        margin-left: 10%;
+        margin-right: 10%
+    }
+}
+
+@media screen and (min-width: 1600px) {
+  .main-page-padding {
+        margin-left: 15%;
+        margin-right: 15%
+    }
+}

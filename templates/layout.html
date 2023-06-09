@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <!-- MDB -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='mdb5-free-standard/css/mdb.min.css' )}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mdb5-free-standard/css/checkbox.css' )}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mdb5-free-standard/css/multirange.css' )}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mdb5-free-standard/css/styles.css' )}}">
+  </head>
+  <body>
+
+    <!-- Start your project here-->
+    <div class="main-page-padding page-background" style="height: 100%">
+      {% include 'nav.html' %}
+      {% block body %}{% endblock %}
+    </div>
+
+   {% include 'footer.html' %}
+
+    <!-- MDB -->
+    <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/mdb.min.js' )}}"></script>
+    <!-- Custom scripts -->
+
+    <script type="text/javascript"></script>
+  </body>
+</html>

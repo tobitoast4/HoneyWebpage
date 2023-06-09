@@ -1,0 +1,146 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="margin: 0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <!-- Top div with sort by and search -->
+                <div class="card" style="margin-bottom: 20px; margin-top: 20px; border-radius: 0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <select class="form-select" aria-label="Sortierung nach neuste" style="width: 30%; height: 35px">
+                                <option selected>Sortierung nach neuste</option>
+                                <option value="1">Sortierung nach älteste</option>
+                                <option value="2">Sortierung nach Preis</option>
+                                <option value="3">Sortierung nach Preis absteigend</option>
+                            </select>
+                            <form class="d-flex input-group w-auto">
+                                <input
+                                    type="search"
+                                    class="form-control rounded"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    aria-describedby="search-addon"
+                                    />
+                                <span class="input-group-text border-0" id="search-addon">
+                                <i class="fas fa-search"></i>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for p in products %}
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card" style="margin-bottom: 20px; min-height: 430px">
+                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                <div class='p-5 text-center bg-image' style="background-image: url('./static/img/{{ p["image_id"] }}.webp'); height: 200px"/>
+                                <div style='position:absolute; top: 0; right: 0; margin: 20px'>
+                                    <span class='badge' style='background-color: #d18c09; float: right; font-size:larger'>{{ p["price"] }} €</span>
+                                </div>
+                            </div>
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ p["title"] }}</h5>
+                            <p class="card-text">
+                                {% if p["description"]|length > 90 %}
+                                {{ p["description"][:90] }}... <a href="">weiter lesen</a>"
+                                {% else %}
+                                {{ p["description"] }}
+                                {% endif %}
+                            </p>
+                            <a href="" class='btn btn-outline-primary btn-rounded ' style='display: block; border-color: #d18c09; color: #d18c09'>In den Warenkorb</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div style="height: 100%; padding-bottom: 20px; padding-top: 20px">
+                <!-- Right div with product categories and more -->
+                <div class="card" style="height: 100%; border-radius: 0">
+                    <div class="card-body">
+                        <h6 style="padding: 10px">{{ products|length }} Produkte gefunden</h6>
+                        <hr/>
+                        <h4 style="padding: 10px">Kategorien</h4>
+                        <div style="padding-left: 10px; padding-right: 10px">
+                            <label class="checkbox-container">Category 1
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Category 2
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Category 3
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Category 4
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                            </label>
+                            <label class="checkbox-container">Category 5
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                        <br/>
+                        <br/>
+
+                        <div style="background-color: red">
+                            <h4 class="label-heading">Preis</h4>
+                            <div style="padding-left: 5px; padding-right: 5px">
+                            <div slider id="slider-distance">
+                                <div>
+                                    <div inverse-left style="width:70%;"></div>
+                                    <div inverse-right style="width:70%;"></div>
+                                    <div range style="left:0%;right:0%;"></div>
+                                    <span thumb style="left:0%;"></span>
+                                    <span thumb style="left:100%;"></span>
+                                    <div sign style="left:0%;">
+                                        <span id="value">0</span>
+                                    </div>
+                                    <div sign style="left:100%;">
+                                        <span id="value">100</span>
+                                    </div>
+                                </div>
+                                <input type="range" tabindex="0" value="0" max="100" min="0" step="1" oninput="
+                                    this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
+                                    var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
+                                    var children = this.parentNode.childNodes[1].childNodes;
+                                    children[1].style.width=value+'%';
+                                    children[5].style.left=value+'%';
+                                    children[7].style.left=value+'%';children[11].style.left=value+'%';
+                                    children[11].childNodes[1].innerHTML=this.value;" />
+                                <input type="range" tabindex="0" value="100" max="100" min="0" step="1" oninput="
+                                    this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
+                                    var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
+                                    var children = this.parentNode.childNodes[1].childNodes;
+                                    children[3].style.width=(100-value)+'%';
+                                    children[5].style.right=(100-value)+'%';
+                                    children[9].style.left=value+'%';children[13].style.left=value+'%';
+                                    children[13].childNodes[1].innerHTML=this.value;" />
+                            </div>
+                        </div>
+                        </div>
+
+                        <div style="padding-left: 5px; padding-right: 5px">
+                            <a href="" class='btn btn-outline-primary btn-rounded '
+                               style='display: block; border-color: #d18c09; color: #d18c09; margin-top: 50px'>
+                                Filter anwenden
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
