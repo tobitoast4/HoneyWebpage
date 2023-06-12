@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="margin: 0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <!-- Top div with sort by and search -->
+                <div class="card" style="margin-top: 20px; border-radius: 0">
+
+                    <div class="row">
+                        <div class="col-md-5" style="margin-top: 0px">
+                            <div class="bg-image hover-zoom" style="padding: 30px; border-radius: 0">
+                                <img src="/static/img/{{ product[0]['image_id'] }}.webp" class='w-100' />
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div style="width: 100%;">
+                                <h2 style="margin-top: 40px" id="name">
+                                    {{ product[0]['title'] }}
+                                </h2>
+                                <h3>
+                                    <div class="d-flex justify-content-start">
+                                        <span class="badge" style="background-color: #d18c09" id="preis">{{ product[0]['price'] }} €</span>
+                                        <div style="font-size: small">1)</div>
+                                        <br />
+                                    </div>
+                                </h3>
+                                <br />
+                                <h3>
+                                    Produkt-Beschreibung
+                                </h3>
+                                {{ product[0]['description'] }}
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <!-- Anzahl der Packungen zum zufügen-->
+                                    <div class="col-md-2">
+                                        <input id="itemCount" type="number" value="1" min="1" style=" width: 100%; padding: 5px; text-align: center; border: none; border-bottom: 2px solid #d18c09;">
+                                    </div>
+                                    <!-- zu warenkorb hinzufügen-->
+                                    <div class="col-md-8">
+                                        <a onclick="addToCart()" class='btn btn-outline-primary btn-rounded' style='display: block; border-color: #d18c09; color: #d18c09'>In den Warenkorb</a>
+                                        <script>
+                                            function addToCart() {
+                                                addProductToCart({{ product[0]['image_id'] }}, document.getElementById("product_counter").value);
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div style="font-size: small; position: absolute; bottom: 10px">1) zzgl. Versandkosten</div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

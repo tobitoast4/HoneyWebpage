@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="margin: 0px">
+    <div style="margin: 20px">
+        <div class="card itemCard">
+            <div class="row">
+                <div class="col-lg-7 col-sm-7 col-5">
+                    <h5 style="padding-top: 10px; padding-left: 20px">Produkt </h5>
+                </div>
+                <div class="col-lg-3 col-sm-2 col-3">
+                    <h5 style="padding-top: 10px">Anzahl </h5>
+                </div>
+                <div class="col-lg-2 col-sm-3 col-4">
+                    <h5 style="padding-top: 10px">Preis in EUR</h5>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="height: 10px"></div>
+
+        <div class="card itemCard">
+            <ul class="list-group list-group-flush" id="list_of_elements_in_cart">
+
+                {% for p in products %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-lg-7 col-sm-7 col-5">
+                            <div class="row">
+                                <div class="col-lg-2 col-4 d-md-block d-none">
+                                    <a href="/product&id={{ p['image_id'] }}">
+                                        <img src="/static/img/{{ p['image_id'] }}.webp" height="100px" />
+                                    </a>
+                                </div>
+                                <div class="col-lg-8 col-8 d-flex align-items-center">
+                                    <h5 style="padding-top: 7px; margin-left: 3%">1x Corona Schnelltest </h5>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3 col-sm-2 col-3 d-flex align-items-center">
+                            <input id="number1" onchange="test()" type="number" value="1" min="1" style="text-align: center; border: none; border-bottom: 2px solid #d18c09; width: 60%">
+                        </div>
+                        <div class="col-lg-2 col-sm-3 col-4 d-flex align-items-center">
+                            <div class="row" style="width: 100%">
+                                <div class="col-lg-9 col-md-7 col-9" style="padding-left: 20%">
+                                    99,99
+                                </div>
+                                <div class="col-lg-3 col-md-5 col-3 d-flex justify-content-end" style="margin-top: 5px">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+
+
+            </ul>
+        </div>
+
+
+        <div style="height: 10px"></div>
+
+        <div class="card itemCard">
+            <br />
+            <div class="row">
+                <div class="col-md-8" style="padding-left: 40px">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox_agb" onclick="hideAlert('agb_alert')" />
+                        <div class="p-6">
+                            Ich akzeptiere die
+                            <a class="text-reset fw-bold" href="./agb.php">AGBs</a>
+                            und habe die Widerrufsbelehrung zur Kenntnis genommen.
+                        </div>
+                    </div>
+                    <div id="agb_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 10px; border-radius: 4px; width: 70%; display: none">
+                        Du musst die AGBs akzeptieren.
+                    </div>
+                    <br />
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox_datenschutz" onclick="hideAlert('datenschutz_alert')" />
+                        <div class="p-6">
+                            Ich habe die
+                            <a class="text-reset fw-bold" href="./datenschutz.php">Datenschutzbestimmungen</a>
+                            gelesen und bin mit der <br />
+                            Nutzung meiner personenbezogenen Daten einverstanden.
+                        </div>
+                    </div>
+                    <div id="datenschutz_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 10px; border-radius: 4px; width: 70%; display: none">
+                        Du musst die AGBs akzeptieren.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-end" style="margin-right: 50px">
+                        <h5 class="card-title" style="margin-right: 20px">Gesamtsumme:</h5>
+                        <h5 class="card-title" id="total_price">99,99 EUR</h5>
+                    </div>
+                    <div class="d-flex justify-content-end" style="margin-right: 50px">
+                        <h6 class="card-title" style="margin-right: 20px">enthaltene MwSt (19%):</h6>
+                        <h6 class="card-title" id="mwst_price">99,99 EUR</h6>
+                    </div>
+                    <div class="d-flex justify-content-end" style="margin-right: 50px">
+                        <h6 class="card-title" style="margin-right: 20px">enthaltene Versandkosten:</h6>
+                        <h6 class="card-title">5,00 EUR</h6>
+                    </div>
+
+
+                    <div class="d-flex justify-content-end" style="margin-right: 50px; margin-top: 10px">
+                        <a href="#!" class="btn btn-primary btn-rounded" style="display: block; background-color: #d18c09">Jetzt kaufen</a>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

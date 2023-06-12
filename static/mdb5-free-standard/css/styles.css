@@ -20,3 +20,8 @@
         margin-right: 15%
     }
 }
+
+.fa-times:hover {
+	color: #ff0000;
+	cursor: pointer;
+}
