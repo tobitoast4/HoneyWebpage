@@ -52,7 +52,11 @@
                                 {{ p["description"] }}
                                 {% endif %}
                             </p>
-                            <a href="" class='btn btn-outline-primary btn-rounded ' style='display: block; border-color: #d18c09; color: #d18c09'>In den Warenkorb</a>
+                            <a class='btn btn-outline-primary btn-rounded '
+                               onclick="addProductToCart({{ p['image_id'] }}, 1)"
+                               style='display: block; border-color: #d18c09; color: #d18c09'>
+                                In den Warenkorb
+                            </a>
                         </div>
                     </div>
                 </div>

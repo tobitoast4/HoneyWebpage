@@ -35,14 +35,14 @@
                                 <div class="row">
                                     <!-- Anzahl der Packungen zum zufügen-->
                                     <div class="col-md-2">
-                                        <input id="itemCount" type="number" value="1" min="1" style=" width: 100%; padding: 5px; text-align: center; border: none; border-bottom: 2px solid #d18c09;">
+                                        <input id="current_product_count" type="number" value="1" min="1" style=" width: 100%; padding: 5px; text-align: center; border: none; border-bottom: 2px solid #d18c09;">
                                     </div>
                                     <!-- zu warenkorb hinzufügen-->
                                     <div class="col-md-8">
                                         <a onclick="addToCart()" class='btn btn-outline-primary btn-rounded' style='display: block; border-color: #d18c09; color: #d18c09'>In den Warenkorb</a>
                                         <script>
                                             function addToCart() {
-                                                addProductToCart({{ product[0]['image_id'] }}, document.getElementById("product_counter").value);
+                                                addProductToCart({{ product[0]['image_id'] }}, document.getElementById("current_product_count").value);
                                             }
                                         </script>
                                     </div>

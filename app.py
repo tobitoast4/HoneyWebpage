@@ -87,6 +87,13 @@ def cart():
             "image_id": 2,
             "quantity": 500,
             "price": "10.00",
+        },
+        {
+            "title": "BLÜTENHONIG - BLÜTEN DER SONNE",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas sapien at augue molestie, sed porta libero faucibus. Vivamus at commodo nibh. Integer vel neque velit. Ut semper sem tellus, eu auctor dui maximus a. Ut a massa non lorem scelerisque dignissim. Curabitur a magna ac dolor convallis dictum fermentum sit amet purus.",
+            "image_id": 6,
+            "quantity": 500,
+            "price": "8.50",
         }
     ]
 
