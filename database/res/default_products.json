@@ -1,0 +1,50 @@
+[
+    {
+        "name": "TANNENHONIG",
+        "description": "Krftiger und flssiger Honig, der kaum kandiert. Er zeichnet sich durch seinen wrzig-krftigen Geschmack aus!",
+        "product_category_id": -1,
+        "quantity_g": 500,
+        "price": "12.50",
+        "amount_in_stock": 10
+    },
+    {
+        "name": "WALDHONIG",
+        "description": "Bei diesem Honig dominiert der Honigtau-Anteil, was ihn zu einem angenehm malzigen, aromatischen Honig macht. Zusätzlich ist noch ein Teil Waldblüte enthalten, der den Honig mit einer feinen Süße abrundet.",
+        "product_category_id": -1,
+        "quantity_g": 500,
+        "price": "10.00",
+        "amount_in_stock": 10
+    },
+    {
+        "name": "SPÄTSOMMERHONIG",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas sapien at augue molestie, sed porta libero faucibus. Vivamus at commodo nibh. Integer vel neque velit. Ut semper sem tellus, eu auctor dui maximus a. Ut a massa non lorem scelerisque dignissim. Curabitur a magna ac dolor convallis dictum fermentum sit amet purus.",
+        "product_category_id": -1,
+        "quantity_g": 500,
+        "price": "8.50",
+        "amount_in_stock": 10
+    },
+    {
+        "name": "BLÜTENHONIG - PERLMUTSCHATZ",
+        "description": "Pollenreicher Blütenhonig von Raps und Löwenzahn, schnell kandierend.",
+        "product_category_id": -1,
+        "quantity_g": 500,
+        "price": "8.50",
+        "amount_in_stock": 10
+    },
+    {
+        "name": "BLÜTENHONIG - FRÜHE BLÜTENBEUTE",
+        "description": "Pollenreicher Blütenhonig von Raps und Löwenzahn, schnell kandierend.",
+        "product_category_id": -1,
+        "quantity_g": 500,
+        "price": "8.50",
+        "amount_in_stock": 10
+    },
+    {
+        "name": "BLÜTENHONIG - BLÜTEN DER SONNE",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas sapien at augue molestie, sed porta libero faucibus. Vivamus at commodo nibh. Integer vel neque velit. Ut semper sem tellus, eu auctor dui maximus a. Ut a massa non lorem scelerisque dignissim. Curabitur a magna ac dolor convallis dictum fermentum sit amet purus.",
+        "product_category_id": -1,
+        "quantity_g": 500,
+        "price": "8.50",
+        "amount_in_stock": 10
+    }
+]

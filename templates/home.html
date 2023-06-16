@@ -34,17 +34,17 @@
                     <div class="col-xl-4 col-md-6">
                         <div class="card" style="margin-bottom: 20px; min-height: 430px">
                             <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                                <div class='p-5 text-center bg-image' style="background-image: url('./static/img/{{ p["image_id"] }}.webp'); height: 200px"/>
+                                <div class='p-5 text-center bg-image' style="background-image: url('./static/img/{{ p["product_id"] }}.webp'); height: 200px"/>
                                 <div style='position:absolute; top: 0; right: 0; margin: 20px'>
                                     <span class='badge' style='background-color: #d18c09; float: right; font-size:larger'>{{ p["price"] }} €</span>
                                 </div>
                             </div>
-                            <a href="/product&id={{ p['image_id'] }}">
+                            <a href="/product&id={{ p['product_id'] }}">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
                             </a>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ p["title"] }}</h5>
+                            <h5 class="card-title">{{ p["name"] }}</h5>
                             <p class="card-text">
                                 {% if p["description"]|length > 90 %}
                                 {{ p["description"][:90] }}... <a href="">weiter lesen</a>"
@@ -53,7 +53,7 @@
                                 {% endif %}
                             </p>
                             <a class='btn btn-outline-primary btn-rounded '
-                               onclick="addProductToCart({{ p['image_id'] }}, 1)"
+                               onclick="addProductToCart({{ p['product_id'] }}, 1)"
                                style='display: block; border-color: #d18c09; color: #d18c09'>
                                 In den Warenkorb
                             </a>
