@@ -168,3 +168,4 @@ function updateTotalPrice() {
 
 //setzt Anzahl der Produkte im Warenkorb bei Seitenaufruf
 setTotalAmountOfProductsInCart();
+

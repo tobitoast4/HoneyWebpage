@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="margin: 0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <!-- Top div with sort by and search -->
+                <div class="card" style="margin-top: 20px; border-radius: 0">
+
+                    <div class="register-container">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <h2>Login</h2>
+                            <div class="form-outline" style="margin-bottom: 15px">
+                                {{ form.email }}
+                                <label class="form-label" for="typeText">E-Mail-Adresse*</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="form-outline" style="margin-bottom: 15px">
+                                        {{ form.password }}
+                                        <label class="form-label" for="typeText">Passwort*</label>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-outline-primary btn-floating" onclick="togglePasswordHide()"
+                                            style="position: relative; right: 10px; display: block; border-color: #d18c09; color: #d18c09">
+                                        <i class="fas fa-eye-slash" id="toggle_pw_visibility_btn"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{ form.submit }}
+                        </form>
+                        <div id="lieferadresse_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 20px; border-radius: 4px; display: none">
+                            Bitte vervollständige deine Angaben.
+                        </div>
+
+                        <script>
+                            function togglePasswordHide() {
+                                var password_input = document.getElementById("password");
+                                var toggle_button = document.getElementById("toggle_pw_visibility_btn");
+
+                                var current_type = password_input.getAttribute("type");
+                                if (current_type == "password") {
+                                    password_input.setAttribute("type", "text");
+                                    toggle_button.setAttribute("class", "fas fa-eye");
+                                } else {
+                                    password_input.setAttribute("type", "password");
+                                    toggle_button.setAttribute("class", "fas fa-eye-slash");
+                                }
+                            }
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

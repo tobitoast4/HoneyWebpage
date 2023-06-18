@@ -27,8 +27,7 @@
           src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
           height="15"
           alt="MDB Logo"
-          loading="lazy"
-        />
+          loading="lazy"/>
       </a>
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -65,57 +64,34 @@
           id="navbarDropdownMenuLink"
           role="button"
           data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">1</span>
+          aria-expanded="false">
+          <i class="fas fa-user-circle"></i>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
+          aria-labelledby="navbarDropdownMenuLink">
+
+          {% if session['logged_in'] == True %}
           <li>
-            <a class="dropdown-item" href="#">Some news</a>
+            <a class="dropdown-item" href="/profile">Profil</a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Another news</a>
+            <a class="dropdown-item" href="/orders">Bestellungen</a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
-      </div>
-      <!-- Avatar -->
-      <div class="dropdown">
-        <a
-          class="dropdown-toggle d-flex align-items-center hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuAvatar"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            class="rounded-circle"
-            height="25"
-            alt="Black and White Portrait of a Man"
-            loading="lazy"
-          />
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuAvatar"
-        >
-          <li>
-            <a class="dropdown-item" href="#">My profile</a>
+            <a class="dropdown-item" href="/settings">Einstellungen</a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="/logout" type="submit">Logout</a>
+          </li>
+          {% else %}
+          <li>
+            <a class="dropdown-item" href="/register">Registrieren</a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Logout</a>
+            <a class="dropdown-item" href="/login">Anmelden</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>
