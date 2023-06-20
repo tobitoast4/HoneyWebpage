@@ -54,6 +54,10 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="form-outline" style="margin-bottom: 15px">
+                                {{ form.phone }}
+                                <label class="form-label" for="typeText">Telefonnummer</label>
+                            </div>
                             <h4 style="margin-top: 25px">Adressangaben</h4>
                             <div class="row">
                                 <div class="col-sm-7">
@@ -122,13 +126,25 @@
                                 }
                             }
                         </script>
+                        <script type="text/javascript" src="{{ url_for('static', filename='simple-notify/simple-notify.min.js' )}}"></script>
 
                         <script type="text/javascript">
                             function Validate() {
                                 var password = document.getElementById("password").value;
                                 var confirmPassword = document.getElementById("password_repeat").value;
                                 if (password != confirmPassword) {
-                                    alert("Passwords do not match.");
+                                    new Notify({
+                                        title: unescape("Fehler bei der Registrierung"),
+                                        text: "Die eingegebenen Passwörter stimmen nicht überein.",
+                                        effect: "slide",
+                                        speed: 300,
+                                        status: "error",
+                                        autoclose: true,
+                                        autotimeout: 10000,
+                                        position: "right bottom",
+                                        gap: 20,
+                                        distance: 70
+                                    })
                                     return false;
                                 }
                                 return true;

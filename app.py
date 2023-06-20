@@ -1,12 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for, session, make_response, session
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField
-from wtforms.validators import InputRequired, Length, NumberRange, ValidationError
 from flask_bcrypt import Bcrypt
 
 import urllib.parse
 
+from forms import RegisterForm, LoginForm
 from database.database import *
 
 
@@ -21,7 +19,7 @@ login_manager.login_view = "login"
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User(1, "Tobi", "Zillmann", "tobi83301@gmail.com") # get this data from database
+    return User(1, "Tobi", "Zillmann", "tobi83301@gmail.com")  # get this data from database
 
 
 class User(UserMixin):
@@ -30,28 +28,6 @@ class User(UserMixin):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
-
-
-class RegisterForm(FlaskForm):
-    firstname = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    lastname = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    email = StringField(validators=[InputRequired()], render_kw={"placeholder": "max.musterfrau@gmail.com", "class": "form-control"})
-    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    password_repeat = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    street = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    house_number = IntegerField(validators=[InputRequired(), NumberRange(min=0)], render_kw={"class": "form-control"})
-    postal_code = IntegerField(validators=[InputRequired(), NumberRange(min=0)], render_kw={"class": "form-control"})
-    city = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    country = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    state = StringField(validators=[Length(min=4, max=20)], render_kw={"class": "form-control"})
-    submit = SubmitField("Register", render_kw={"onclick": "return Validate()"})
-
-
-class LoginForm(FlaskForm):
-    email = StringField(validators=[InputRequired()], render_kw={"class": "form-control"})
-    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"class": "form-control"})
-    submit = SubmitField("Register")
-
 
 
 @app.route('/')
@@ -79,12 +55,23 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        print("asfsdfasdfsaf")
         firstname = form.firstname.data
         lastname = form.lastname.data
         email = form.email.data
+        phone = form.phone.data
         hashed_password = bcrypt.generate_password_hash(form.password.data)
+        street = form.street.data
+        house_number = form.house_number.data
+        postal_code = form.postal_code.data
+        city = form.city.data
+        country = form.country.data
+        state = form.state.data
 
-        print((firstname, lastname, email, hashed_password))
+        address_id = add_new_address(street, house_number, postal_code, city, country, state)
+        add_new_customer(firstname, lastname, email, hashed_password, phone, address_id)
+
+        print((firstname, lastname, email, phone, hashed_password, street, house_number, postal_code, city, country, state))
         return redirect(url_for("home"))
 
     return render_template("register.html", form=form)
