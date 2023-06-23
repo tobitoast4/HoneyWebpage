@@ -1,6 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for, session, make_response, session
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
+from wtforms.validators import ValidationError
+
+from user import User
 
 import urllib.parse
 
@@ -18,16 +21,10 @@ login_manager.login_view = "login"
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User(1, "Tobi", "Zillmann", "tobi83301@gmail.com")  # get this data from database
-
-
-class User(UserMixin):
-    def __init__(self, user_id, firstname, lastname, email):
-        self.id = user_id
-        self.firstname = firstname
-        self.lastname = lastname
-        self.email = email
+def load_user(customer_id):
+    print("load_user(email)")
+    print(customer_id)
+    return get_customer_by_id(customer_id)  # get this data from database
 
 
 @app.route('/')
@@ -55,12 +52,11 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        print("asfsdfasdfsaf")
         firstname = form.firstname.data
         lastname = form.lastname.data
         email = form.email.data
         phone = form.phone.data
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         street = form.street.data
         house_number = form.house_number.data
         postal_code = form.postal_code.data
@@ -81,11 +77,22 @@ def register():
 def login():
     form = LoginForm()
     next_page = request.args.get('next')
+    if "user_id" in session:
+        return redirect(url_for("home"))
     if form.validate_on_submit():
         # check if user exists in db https://youtu.be/71EU8gnZqZQ?t=1615
-        user = User(1, "Tobi", "Zillmann", "tobi83301@gmail.com")  # get this from db
+        email = form.email.data
+        user = get_customer_by_email(email)
+        if user is None:
+            print('ValidationError("There is no account with the entered email address.")')
+            return ""
+        if not bcrypt.check_password_hash(user.password, form.password.data):
+            # return ValidationError("The entered password is not correct.")
+            print('ValidationError("The entered password is not correct.")')
+            return ""
         session['logged_in'] = True
-        session['email'] = user.email
+        session['user_id'] = user.id
+        session['email'] = user.email_address
         login_user(user)
         if next_page is not None:
             return redirect(url_for(next_page[1:]))
@@ -97,15 +104,20 @@ def login():
 @login_required
 def logout():
     session['logged_in'] = False
+    session.pop('user_id', None)
     session.pop('email', None)
     logout_user()
+
     return redirect(url_for("home"))
 
 
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template("profile.html")
+    user = get_customer_by_id(session['user_id'])
+    address = get_address_by_id(user.default_address_id)
+    print(address)
+    return render_template("profile.html", user=user, address=address)
 
 
 @app.route('/orders')

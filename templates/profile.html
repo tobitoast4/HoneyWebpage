@@ -7,6 +7,18 @@
                 <!-- Top div with sort by and search -->
                 <div class="card" style="margin-top: 20px; border-radius: 0">
                     <h3>Profile</h3>
+                    {{ user.firstname }}
+                    {{ user.lastname }}
+                    {{ user.email_address }}
+                    {{ user.phone_number }}
+                    <br/>
+                    <br/>
+                    {{ address["Leienfelsstraße"] }}
+                    {{ address["house_number"] }}
+                    {{ address["postal_code"] }}
+                    {{ address["city"] }}
+                    {{ address["country"] }}
+                    {{ address["state"] }}
                 </div>
             </div>
         </div>

@@ -36,3 +36,16 @@ def add_new_address(street, house_number, postal_code, city, country, state) -> 
 
     return new_id
 
+
+def get_address_by_id(address_id):
+    cur.execute(f"""
+        SELECT *
+        FROM address
+        WHERE address_id="{address_id}";
+    """)
+    addresses = []
+    for row in cur:
+        addresses.append(dict(zip([c[0] for c in cur.description], row)))
+    if len(addresses) == 0:
+        return None
+    return addresses[0]
