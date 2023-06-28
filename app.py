@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, session, make_response, session
+from flask import Flask, request, render_template, redirect, url_for, session, make_response, session, flash, get_flashed_messages
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from wtforms.validators import ValidationError
@@ -67,7 +67,7 @@ def register():
         address_id = add_new_address(street, house_number, postal_code, city, country, state)
         add_new_customer(firstname, lastname, email, hashed_password, phone, address_id)
 
-        print((firstname, lastname, email, phone, hashed_password, street, house_number, postal_code, city, country, state))
+        flash("Sie haben sich erfolgreich registriert! Sie können sich jetzt anmelden.")
         return redirect(url_for("home"))
 
     return render_template("register.html", form=form)
@@ -84,18 +84,18 @@ def login():
         email = form.email.data
         user = get_customer_by_email(email)
         if user is None:
-            print('ValidationError("There is no account with the entered email address.")')
-            return ""
+            flash(f"User with email address '{email}' does not exist.")
+            return redirect(url_for("login"))
         if not bcrypt.check_password_hash(user.password, form.password.data):
-            # return ValidationError("The entered password is not correct.")
-            print('ValidationError("The entered password is not correct.")')
-            return ""
+            flash(f"The entered password is not correct.")
+            return redirect(url_for("login"))
         session['logged_in'] = True
         session['user_id'] = user.id
         session['email'] = user.email_address
         login_user(user)
         if next_page is not None:
             return redirect(url_for(next_page[1:]))
+        flash(f"Sie haben sich erfolgreich eingeloggt!")
         return redirect(url_for("home"))
     return render_template("login.html", form=form)
 

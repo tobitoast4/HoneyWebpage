@@ -146,5 +146,30 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='simple-notify/simple-notify.min.js' )}}"></script>
+
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for error in messages %}
+                    <script type="text/javascript">
+                        new Notify({
+                            title: "",
+                            text: "{{ error }}",
+                            effect: "slide",
+                            speed: 300,
+                            status: "success",
+                            autoclose: true,
+                            autotimeout: 10000,
+                            position: "right bottom",
+                            gap: 20,
+                            distance: 70
+                        })
+                    </script>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 </div>
 {% endblock %}
