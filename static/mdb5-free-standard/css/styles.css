@@ -12,6 +12,11 @@
 	cursor: pointer;
 }
 
+.fa-search:hover {
+	color: #d18c09;
+	cursor: pointer;
+}
+
 .form-control:focus {
   border-color: #6265e4 !important;
   box-shadow: 0 0 5px rgba(98, 101, 228, 1) !important;

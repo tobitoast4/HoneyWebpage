@@ -36,6 +36,7 @@ def create_tables():
 
 
 def insert_default_values():
+    insert_default_product_categories()
     insert_default_products()
 
 

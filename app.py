@@ -29,12 +29,24 @@ def load_user(customer_id):
 
 @app.route('/')
 def home():
+    return redirect(url_for("shop"))
+
+
+@app.route('/shop')
+def shop():
     products = get_all_products()
-    return render_template("home.html", products=products)
+    categories = get_all_product_categories()
+    order = request.args.get('orderBy', default="newest", type=str)  # newest, oldest, price_asc, price_desc
+    search = request.args.get('search', default="", type=str)
+    selected_categories = request.args.get('categories', default="", type=str)
+    price = request.args.get('price', default="", type=str)
+    return render_template("shop.html", products=products, categories=categories, orderBy=order,
+                           search=search, selected_categories=selected_categories)
 
 
-@app.route('/product&id=<product_id>')
-def product(product_id):
+@app.route('/product')
+def product():
+    product_id = request.args.get('id', default=1, type=int)
     p = get_one_product(product_id)
     return render_template("product.html", product=p)
 

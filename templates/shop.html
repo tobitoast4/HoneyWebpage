@@ -8,14 +8,26 @@
                 <div class="card" style="margin-bottom: 20px; margin-top: 20px; border-radius: 0">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <select class="form-select" aria-label="Sortierung nach neuste" style="width: 30%; height: 35px">
-                                <option selected>Sortierung nach neuste</option>
-                                <option value="1">Sortierung nach älteste</option>
-                                <option value="2">Sortierung nach Preis</option>
-                                <option value="3">Sortierung nach Preis absteigend</option>
+                            <select class="form-select" id="selectOrderBy" onchange="onOrderChange()" style="width: 30%; height: 35px">
+                                <option value="newest" selected>Sortierung nach neuste</option>
+                                <option value="oldest">Sortierung nach älteste</option>
+                                <option value="price_asc">Sortierung nach Preis</option>
+                                <option value="price_desc">Sortierung nach Preis absteigend</option>
                             </select>
+                            <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/shop.js' )}}"></script>
+                            <script>
+                                {% if orderBy %}
+                                    document.getElementById("selectOrderBy").value="{{ orderBy }}";
+                                {% endif %}
+
+                                function onOrderChange(){
+                                    addUrlParameters('orderBy', document.getElementById("selectOrderBy").value);
+                                }
+                            </script>
+
                             <form class="d-flex input-group w-auto">
                                 <input
+                                    id="textbox_search"
                                     type="search"
                                     class="form-control rounded"
                                     placeholder="Search"
@@ -23,7 +35,27 @@
                                     aria-describedby="search-addon"
                                     />
                                 <span class="input-group-text border-0" id="search-addon">
-                                <i class="fas fa-search"></i>
+                                <i class="fas fa-search"
+                                   onclick="onSearch()">
+                                </i>
+                                <script>
+                                    {% if search %}
+                                        let old_search_string = "{{ search }}";
+                                        old_search_string = old_search_string.replace(/\+/g, ' ');
+                                        document.getElementById('textbox_search').value = old_search_string;
+                                    {% endif %}
+
+                                    function onSearch(){
+                                        let search_string = document.getElementById('textbox_search').value;
+                                        search_string = search_string.replace(/ +(?= )/g,'');
+                                        search_string = search_string.replace(/ /g, '+');
+                                        if (!search_string || search_string == "+") {
+                                            removeUrlParameter('search');
+                                        } else {
+                                            addUrlParameters('search', search_string);
+                                        }
+                                    }
+                                </script>
                                 </span>
                             </form>
                         </div>
@@ -39,7 +71,8 @@
                                     <span class='badge' style='background-color: #d18c09; float: right; font-size:larger'>{{ p["price"] }} €</span>
                                 </div>
                             </div>
-                            <a href="/product&id={{ p['product_id'] }}">
+                            <a href="/product?id={{ p['product_id'] }}">
+                            <a href="/product?id={{ p['product_id'] }}">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
                             </a>
                         </div>
@@ -72,26 +105,15 @@
                         <hr/>
                         <h4 style="padding: 10px">Kategorien</h4>
                         <div style="padding-left: 10px; padding-right: 10px">
-                            <label class="checkbox-container">Category 1
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox-container">Category 2
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox-container">Category 3
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox-container">Category 4
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox-container">Category 5
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                            </label>
+                            {% for cat in categories %}
+                                <label class="checkbox-container">
+                                    {{ cat["description"] }}
+                                    <input id="category-checkbox-{{ cat['product_category_id'] }}"
+                                           name="{{ cat['product_category_id'] }}"
+                                           type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            {% endfor %}
                         </div>
 
                         <br/>
@@ -135,11 +157,42 @@
                         </div>
 
                         <div style="padding-left: 5px; padding-right: 5px">
-                            <a href="" class='btn btn-outline-primary btn-rounded '
+                            <a class='btn btn-outline-primary btn-rounded '
+                               onclick="applyFilters()"
                                style='display: block; border-color: #d18c09; color: #d18c09; margin-top: 50px'>
                                 Filter anwenden
                             </a>
                         </div>
+                        <script>
+                            {% if selected_categories %}
+                                // select the old selected categories on page reload
+                                let old_selected_categories_string = "{{ selected_categories }}";
+                                old_selected_categories_list = old_selected_categories_string.split("+");
+                                console.log(old_selected_categories_list);
+                                for (var old_cat_id of old_selected_categories_list) {
+                                    let check_box_id = "category-checkbox-" + old_cat_id;
+                                    document.getElementById(check_box_id).checked = true;
+                                }
+                            {% else %}
+                                // select all categories if the url parameter is not given
+                                var category_checkboxes = document.querySelectorAll('[id^="category-checkbox-"]');
+                                for (var cat of category_checkboxes) {
+                                    cat.checked = true;
+                                }
+                            {% endif %}
+
+                            function applyFilters(){
+                                var category_checkboxes = document.querySelectorAll('[id^="category-checkbox-"]');
+                                var list_of_selected_categories = [];
+                                for (var cat of category_checkboxes) {
+                                    if (cat.checked) {
+                                        list_of_selected_categories.push(cat.name);
+                                    }
+                                }
+                                let selected_categories = list_of_selected_categories.join("+");
+                                addUrlParameters("categories", selected_categories);
+                            }
+                        </script>
 
                     </div>
                 </div>
