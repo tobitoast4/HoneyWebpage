@@ -64,3 +64,16 @@ def insert_default_products():
             p["price"],
             p["amount_in_stock"]
         )
+
+
+def get_highest_product_price():
+    cur.execute("""
+        SELECT MAX(price)
+        From product;
+    """)
+    import math
+
+    try:
+        return math.ceil([row for row in cur][0][0])
+    except:
+        return 100

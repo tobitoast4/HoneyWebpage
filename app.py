@@ -34,14 +34,34 @@ def home():
 
 @app.route('/shop')
 def shop():
-    products = get_all_products()
-    categories = get_all_product_categories()
     order = request.args.get('orderBy', default="newest", type=str)  # newest, oldest, price_asc, price_desc
     search = request.args.get('search', default="", type=str)
     selected_categories = request.args.get('categories', default="", type=str)
     price = request.args.get('price', default="", type=str)
+
+    highest_price = get_highest_product_price()
+    min_value = 0
+    max_value = highest_price
+
+    if price != "":
+        prices = price.split("+")
+        min_value = int(prices[0])
+        max_value = int(prices[1])
+
+    silder_price_data = {
+        "highest_price": highest_price,
+        "min_value": min_value,
+        "max_value": max_value,
+        "min_value_percent": round(min_value / highest_price * 100),
+        "max_value_percent": round(max_value / highest_price * 100)
+    }
+
+    # finally get the data from the database based on the given url parameters
+    products = get_all_products()
+    categories = get_all_product_categories()
+
     return render_template("shop.html", products=products, categories=categories, orderBy=order,
-                           search=search, selected_categories=selected_categories)
+                           search=search, selected_categories=selected_categories, silder_price_data=silder_price_data)
 
 
 @app.route('/product')

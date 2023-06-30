@@ -18,6 +18,14 @@ def create_table_customer():
     conn.commit()
 
 
+def get_all_customers() -> list:
+    cur.execute("SELECT * FROM customer")
+    customer_list = []
+    for row in cur:
+        customer_list.append(dict(zip([c[0] for c in cur.description], row)))
+    return customer_list
+
+
 def add_new_customer(firstname, lastname, email_address, password, phone_number, default_address_id):
     cur.execute(f"""
         INSERT INTO customer (customer_id, firstname, lastname, email_address, password, phone_number, default_address_id)

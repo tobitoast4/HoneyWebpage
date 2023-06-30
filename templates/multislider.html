@@ -1,0 +1,38 @@
+<!-- Slider from https://codepen.io/glitchworker/pen/XVdKqj-->
+<div>
+    <div style="visibility: hidden">.</div> <!-- use this to have "Preisspanne" in the right place-->
+    <h4 class="label-heading">Preisspanne</h4>
+    <div>
+        <div slider id="slider-distance">
+            <div>
+                <div inverse-left style="width:70%;"></div>
+                <div inverse-right style="width:70%;"></div>
+                <div range style="left:{{ silder_price_data['min_value_percent'] }}%;right:{{ 100 - silder_price_data['max_value_percent'] }}%;"></div>
+                <span thumb style="left:{{ silder_price_data['min_value_percent'] }}%;"></span>
+                <span thumb style="left:{{ silder_price_data['max_value_percent'] }}%;"></span>
+                <div sign style="left:{{ silder_price_data['min_value_percent'] }}%;">
+                    <span id="value">{{ silder_price_data['min_value'] }}</span>
+                </div>
+                <div sign style="left:{{ silder_price_data['max_value_percent'] }}%;">
+                    <span id="value">{{ silder_price_data['max_value'] }}</span>
+                </div>
+            </div>
+            <input id="multislider_min_value" type="range" tabindex="0" value="{{ silder_price_data['min_value'] }}" max="{{ silder_price_data['highest_price'] }}" min="0" step="1" oninput="
+                this.value=Math.min(this.value,this.parentNode.childNodes[5].value-1);
+                var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
+                var children = this.parentNode.childNodes[1].childNodes;
+                children[1].style.width=value+'%';
+                children[5].style.left=value+'%';
+                children[7].style.left=value+'%';children[11].style.left=value+'%';
+                children[11].childNodes[1].innerHTML=this.value;" />
+            <input id="multislider_max_value" type="range" tabindex="0" value="{{ silder_price_data['max_value'] }}" max="{{ silder_price_data['highest_price'] }}" min="0" step="1" oninput="
+                this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-1));
+                var value=(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.value)-(100/(parseInt(this.max)-parseInt(this.min)))*parseInt(this.min);
+                var children = this.parentNode.childNodes[1].childNodes;
+                children[3].style.width=(100-value)+'%';
+                children[5].style.right=(100-value)+'%';
+                children[9].style.left=value+'%';children[13].style.left=value+'%';
+                children[13].childNodes[1].innerHTML=this.value;" />
+        </div>
+    </div>
+</div>
