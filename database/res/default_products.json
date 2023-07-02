@@ -50,7 +50,7 @@
     {
         "name": "PROPOLIS TINKTUR 40% 20 ML",
         "description": "Bienenkittharz flüssig\nPropolis-Gehalt: 40%\n20ml Tropfflasche",
-        "product_category_id": 5,
+        "product_category_id": 3,
         "quantity_g": 20,
         "price": "19.99",
         "amount_in_stock": 10
@@ -58,7 +58,7 @@
     {
         "name": "PROPOLIS TINKTUR 20% 20ML",
         "description": "Bienenkittharz flüssig\nPropolis-Gehalt: 20%\n20ml Tropfflasche",
-        "product_category_id": 5,
+        "product_category_id": 3,
         "quantity_g": 20,
         "price": "10.00",
         "amount_in_stock": 10
@@ -66,7 +66,7 @@
     {
         "name": "Anfängerkurs",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas sapien at augue molestie, sed porta libero faucibus. Vivamus at commodo nibh. Integer vel neque velit. Ut semper sem tellus, eu auctor dui maximus a. Ut a massa non lorem scelerisque dignissim. Curabitur a magna ac dolor convallis dictum fermentum sit amet purus.",
-        "product_category_id": 6,
+        "product_category_id": 4,
         "quantity_g": 0,
         "price": "150.00",
         "amount_in_stock": 1000
@@ -74,7 +74,7 @@
     {
         "name": "Fortgeschrittenenkurs",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas sapien at augue molestie, sed porta libero faucibus. Vivamus at commodo nibh. Integer vel neque velit. Ut semper sem tellus, eu auctor dui maximus a. Ut a massa non lorem scelerisque dignissim. Curabitur a magna ac dolor convallis dictum fermentum sit amet purus.",
-        "product_category_id": 6,
+        "product_category_id": 4,
         "quantity_g": 0,
         "price": "100.00",
         "amount_in_stock": 1000
