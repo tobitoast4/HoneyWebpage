@@ -28,5 +28,5 @@ def add_new_category(description):
 
 
 def insert_default_product_categories():
-    for cat in ["Honig (flüssig)", "Honig (zähflüssig)", "Bienenvolk", "Utensilien"]:
+    for cat in ["Honig (flüssig)", "Honig (zähflüssig)", "Propolis", "Kurse", "Utensilien"]:
         add_new_category(cat)

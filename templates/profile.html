@@ -6,20 +6,99 @@
             <div class="col-md">
                 <!-- Top div with sort by and search -->
                 <div class="card" style="margin-top: 20px; border-radius: 0">
-                    <h3>Profile</h3>
-                    {{ user.firstname }}
-                    {{ user.lastname }}
-                    {{ user.email_address }}
-                    {{ user.phone_number }}
-                    <br/>
-                    <br/>
-                    {{ address["Leienfelsstraße"] }}
-                    {{ address["house_number"] }}
-                    {{ address["postal_code"] }}
-                    {{ address["city"] }}
-                    {{ address["country"] }}
-                    {{ address["state"] }}
+
+                    <h4 style="padding-top: 30px; padding-left: 6%; padding-bottom: 20px">Accountdetails</h4>
+                    <hr style="margin: 0% 3%" />
+                    <br />
+
+                    <div class="row" style="padding: 1% 10%">
+
+                        <!-- Felder mit Nutzerdaten -->
+                        <div class="col-lg-5">
+                            <br />
+                            <h5>Persönliche Daten</h5>
+                            <br />
+                            <div class="row">
+                                <div class="col-6">Vorname: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_vorname">
+                                    {{ user.firstname }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">Nachname: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_nachname">
+                                    {{ user.lastname }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">E-Mail-Adresse: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_email">
+                                    {{ user.email_address }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">Telefonnummer: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_telnr">
+                                    {{ user.phone_number }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Felder mit Adressdaten des Nutzers -->
+                        <div class="col-md-2 d-flex justify-content-center">
+                            <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
+                        </div>
+                        <div class="col-lg-5">
+                            <br />
+                            <h5>Adressangaben</h5>
+                            <br />
+                            <div class="row">
+                                <div class="col-6">Stadt: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_stadt">
+                                    {{ address["postal_code"] }} {{ address["city"] }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">Straße: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_strasse">
+                                    {{ address["street"] }} {{ address["house_number"] }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">Land: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_land">
+                                    {{ address["country"] }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">Bundesland: </div>
+                                <div class="col-6 d-flex justify-content-end" id="field_bundesland">
+                                    {{ address["state"] }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <br />
+                    <hr style="margin: 0% 3%" />
+                    <br />
+
+                    <div class="row" style="padding: 1% 10%">
+                        <!-- Felder mit Nutzerdaten -->
+                        <div class="col-lg-6">
+                            <a class='btn btn-outline-primary btn-rounded' style='display: block; border-color: #d18c09; color: #d18c09'>Angaben bearbeiten</a>
+                            <div style="margin-bottom: 8px"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <a class='btn btn-outline-primary btn-rounded' style='display: block; border-color: #d18c09; color: #d18c09'>Passwort zurücksetzen</a>
+                            <br />
+                        </div>
+                    </div>
+
                 </div>
+
+
             </div>
         </div>
     </div>

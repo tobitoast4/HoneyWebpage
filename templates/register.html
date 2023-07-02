@@ -104,9 +104,6 @@
 
                             {{ form.submit }}
                         </form>
-                        <div id="lieferadresse_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 20px; border-radius: 4px; display: none">
-                            Bitte vervollständige deine Angaben.
-                        </div>
 
                         <script>
                             function togglePasswordHide() {
@@ -150,9 +147,32 @@
                                 return true;
                             }
                         </script>
-
-
                     </div>
+
+                    <div>
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% set error_id = 0 %}
+                                {% for error in messages %}
+                                    <div class="alert alert-danger alert-dismissible d-flex align-items-center"
+                                         style="margin: 0 15% 20px 15%"
+                                         id="error-alert-{{ error_id }}">
+                                        <strong class="mx-2">Fehler: </strong> {{ error }}
+                                        <button type="button" class="btn-close"
+                                                onclick="removeErrorAlert('error-alert-{{ error_id }}')">
+                                        </button>
+                                    </div>
+                                    {% set error_id = error_id + 1 %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <script>
+                        function removeErrorAlert(alert_id) {
+                            document.getElementById(alert_id).remove();
+                        }
+                    </script>
+
                 </div>
             </div>
         </div>

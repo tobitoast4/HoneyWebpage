@@ -1,0 +1,63 @@
+<div>
+    <div class="card itemCard">
+        <ul class="list-group list-group-flush" id="list_of_elements_in_chart">
+            <!-- Paypal payment: See https://developer.paypal.com/dashboard/ and
+                https://developer.paypal.com/api/nvp-soap/paypal-payments-standard/integration-guide/checkout-exp-buy-now/ -->
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                <!-- Identify your business so that you can collect the payments. -->
+                <input type="hidden" name="business" value="markuszillmann@gmx.de">
+                <!-- Specify a Buy Now button. --> <input type="hidden" name="cmd" value="_xclick">
+                <!-- Specify details about the item that buyers will purchase. -->
+                <input type="hidden" name="item_name" value="Test">
+                <input type="hidden" name="amount" value="0.01">
+                <input type="hidden" name="currency_code" value="EUR">
+                <INPUT TYPE="hidden" NAME="return" value="www.google.de">
+                <!-- Display the payment button. -->
+                <input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now">
+                <img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+            </form>
+            <li class="list-group-item itemCardPayment" id="payment_paypal" onclick="selectPaypal()">
+                <div class="row">
+                    <div class="col-md-5 col-10">
+                        <img src="https://rgblog.exali.de/wp-content/uploads/2018/01/paypal-784404_1280.png" height="60px" />
+                    </div>
+                    <div class="col-6 d-flex align-items-center d-md-block d-none">
+                        <h4 style="padding-top: 17px; margin-left: 3%">PayPal</h4>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <i id="checkmark_paypal" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item itemCardPayment" id="payment_credit" onclick="selectCreditcard()">
+                <div class="row">
+                    <div class="col-md-5 col-10">
+                        <img src="../img/kreditkarte.png" height="60px" width="210px" />
+                    </div>
+                    <div class="col-6 d-flex align-items-center d-md-block d-none">
+                        <h4 style="padding-top: 17px; margin-left: 3%">Kreditkarte</h4>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <i id="checkmark_credit" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item itemCardPayment" id="payment_giro" onclick="selectGiropay()">
+                <div class="row">
+                    <div class="col-md-5 col-10">
+                        <img src="https://www.giropay.de/fileadmin/user_upload/giropay/logos/giropay_960px_color_rgb.png" height="60px" />
+                    </div>
+                    <div class="col-6 d-flex align-items-center d-md-block d-none">
+                        <h4 style="padding-top: 17px; margin-left: 3%">GiroPay</h4>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <i id="checkmark_giro" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="payment_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 20px; border-radius: 4px; display: none">
+        Bitte wähle eine Zahlungsmethode aus.
+    </div>
+</div>

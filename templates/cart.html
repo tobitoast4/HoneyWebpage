@@ -95,53 +95,53 @@
 
         <div class="card itemCard">
             <br />
-            <div class="row">
-                <div class="col-md-8" style="padding-left: 40px">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="checkbox_agb" onclick="hideAlert('agb_alert')" />
-                        <div class="p-6">
-                            Ich akzeptiere die
-                            <a class="text-reset fw-bold" href="./agb.php">AGBs</a>
-                            und habe die Widerrufsbelehrung zur Kenntnis genommen.
+            <form method="POST" action="">
+                <div class="row">
+                    {{ form.hidden_tag() }}
+                    <div class="col-md-8" style="padding-left: 40px">
+                        <div class="form-check">
+                            {{ form.agb }}
+                            <div class="p-6">
+                                Ich akzeptiere die
+                                <a class="text-reset fw-bold" href="./agb.php">AGBs</a>
+                                und habe die Widerrufsbelehrung zur Kenntnis genommen.
+                            </div>
+                        </div>
+                        <div id="agb_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 10px; border-radius: 4px; width: 70%; display: none">
+                            Du musst die AGBs akzeptieren.
+                        </div>
+                        <br />
+                        <div class="form-check">
+                            {{ form.privacy }}
+                            <div class="p-6">
+                                Ich habe die
+                                <a class="text-reset fw-bold" href="./datenschutz.php">Datenschutzbestimmungen</a>
+                                gelesen und bin mit der <br />
+                                Nutzung meiner personenbezogenen Daten einverstanden.
+                            </div>
                         </div>
                     </div>
-                    <div id="agb_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 10px; border-radius: 4px; width: 70%; display: none">
-                        Du musst die AGBs akzeptieren.
-                    </div>
-                    <br />
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="checkbox_datenschutz" onclick="hideAlert('datenschutz_alert')" />
-                        <div class="p-6">
-                            Ich habe die
-                            <a class="text-reset fw-bold" href="./datenschutz.php">Datenschutzbestimmungen</a>
-                            gelesen und bin mit der <br />
-                            Nutzung meiner personenbezogenen Daten einverstanden.
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end" style="margin-right: 50px">
+                            <h5 class="card-title" style="margin-right: 20px">Gesamtsumme:</h5>
+                            <h5 class="card-title" id="total_price">99,99 EUR</h5>
+                        </div>
+                        <div class="d-flex justify-content-end" style="margin-right: 50px">
+                            <h6 class="card-title" style="margin-right: 20px">enthaltene MwSt (19%):</h6>
+                            <h6 class="card-title" id="mwst_price">99,99 EUR</h6>
+                        </div>
+                        <div class="d-flex justify-content-end" style="margin-right: 50px">
+                            <h6 class="card-title" style="margin-right: 20px">enthaltene Versandkosten:</h6>
+                            <h6 class="card-title">5,00 EUR</h6>
+                        </div>
+
+
+                        <div class="d-flex justify-content-end" style="margin-right: 50px; margin-top: 10px">
+                            {{ form.submit }}
                         </div>
                     </div>
-                    <div id="datenschutz_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 10px; border-radius: 4px; width: 70%; display: none">
-                        Du musst die AGBs akzeptieren.
-                    </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="d-flex justify-content-end" style="margin-right: 50px">
-                        <h5 class="card-title" style="margin-right: 20px">Gesamtsumme:</h5>
-                        <h5 class="card-title" id="total_price">99,99 EUR</h5>
-                    </div>
-                    <div class="d-flex justify-content-end" style="margin-right: 50px">
-                        <h6 class="card-title" style="margin-right: 20px">enthaltene MwSt (19%):</h6>
-                        <h6 class="card-title" id="mwst_price">99,99 EUR</h6>
-                    </div>
-                    <div class="d-flex justify-content-end" style="margin-right: 50px">
-                        <h6 class="card-title" style="margin-right: 20px">enthaltene Versandkosten:</h6>
-                        <h6 class="card-title">5,00 EUR</h6>
-                    </div>
-
-
-                    <div class="d-flex justify-content-end" style="margin-right: 50px; margin-top: 10px">
-                        <a href="#!" class="btn btn-primary btn-rounded" style="display: block; background-color: #d18c09">Jetzt kaufen</a>
-                    </div>
-                </div>
-            </div>
+            </form>
             <br />
         </div>
 

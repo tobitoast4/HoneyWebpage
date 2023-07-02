@@ -55,6 +55,18 @@
                                             addUrlParameters('search', search_string);
                                         }
                                     }
+
+                                    // Trigger search on enter
+                                    var search_input = document.getElementById("textbox_search");
+
+                                    search_input.addEventListener("keypress", function(event) {
+                                      if (event.key === "Enter") {
+                                        // Cancel the default action, if needed
+                                        event.preventDefault();
+                                        // Trigger the button element with a click
+                                        onSearch();
+                                      }
+                                    });
                                 </script>
                                 </span>
                             </form>
@@ -68,8 +80,14 @@
                             <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                 <div class='p-5 text-center bg-image' style="background-image: url('./static/img/{{ p["product_id"] }}.webp'); height: 200px"/>
                                 <div style='position:absolute; top: 0; right: 0; margin: 20px'>
-                                    <span class='badge' style='background-color: #d18c09; float: right; font-size:larger'>{{ p["price"] }} €</span>
+                                    <span id="price_badge_{{ p['product_id'] }}" class='badge' style='background-color: #d18c09; float: right; font-size:larger'></span>
                                 </div>
+                                <script>
+                                    let price_float_{{ p['product_id'] }} = {{ p["price"] }};
+                                    let price_str_{{ p['product_id'] }} = (Math.round(price_float_{{ p['product_id'] }} * 100) / 100).toFixed(2).replace(".", ",");
+                                    price_str_{{ p['product_id'] }} = price_str_{{ p['product_id'] }} + " €";
+                                    document.getElementById("price_badge_{{ p['product_id'] }}").innerHTML = price_str_{{ p['product_id'] }};
+                                </script>
                             </div>
                             <a href="/product?id={{ p['product_id'] }}">
                             <a href="/product?id={{ p['product_id'] }}">

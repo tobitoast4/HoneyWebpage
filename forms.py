@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, BooleanField
 from wtforms.validators import InputRequired, Length, NumberRange, ValidationError
 
 
@@ -26,3 +26,10 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=1, max=99)], render_kw={"class": "form-control"})
     submit = SubmitField("Login", render_kw={"style": "display: block; border-color:#d18c09; background-color: #d18c09; color: white",
                                              "class": "btn btn-outline-primary btn-rounded"})
+
+
+class BuyNowForm(FlaskForm):
+    agb = BooleanField(validators=[InputRequired()], render_kw={"class": "form-check-input", "type": "checkbox"})
+    privacy = BooleanField(validators=[InputRequired()], render_kw={"class": "form-check-input", "type": "checkbox"})
+    submit = SubmitField("Zur Kasse", render_kw={"style": "display: block; background-color: #d18c09",
+                                                 "class": "btn btn-primary btn-rounded"})

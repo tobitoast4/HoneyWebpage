@@ -24,9 +24,10 @@
       <!-- Navbar brand -->
       <a class="navbar-brand mt-2 mt-lg-0" href="#">
         <img
-          src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-          height="15"
-          alt="MDB Logo"
+          src="{{ url_for('static', filename='img/logo_transparent.png' )}}"
+          height="45"
+          alt="Imkerei Zillmann Logo"
+          style="margin-left: 10px"
           loading="lazy"/>
       </a>
       <!-- Left links -->
@@ -38,10 +39,7 @@
           <a class="nav-link" href="#">Kurse</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Api-Therapie</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Über uns</a>
+          <a class="nav-link" href="/about">Über uns</a>
         </li>
       </ul>
       <!-- Left links -->
@@ -80,6 +78,9 @@
           </li>
           <li>
             <a class="dropdown-item" href="/settings">Einstellungen</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
           </li>
           <li>
             <a class="dropdown-item" href="/logout">Logout</a>

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="margin: 0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <!-- Top div with sort by and search -->
+                <div class="card" style="margin-top: 20px; border-radius: 0">
+                        <img
+                          src="{{ url_for('static', filename='img/logo_transparent.png' )}}"
+                          height="300"
+                          width="300"
+                          alt="Imkerei Zillmann Logo"
+                          loading="lazy"/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

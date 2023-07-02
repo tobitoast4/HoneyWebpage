@@ -7,7 +7,7 @@ from user import User
 
 import urllib.parse
 
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, BuyNowForm
 from database.database import *
 
 
@@ -30,6 +30,11 @@ def load_user(customer_id):
 @app.route('/')
 def home():
     return redirect(url_for("shop"))
+
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
 
 
 @app.route('/shop')
@@ -57,7 +62,7 @@ def shop():
     }
 
     # finally get the data from the database based on the given url parameters
-    products = get_all_products()
+    products = get_products_filtered(order, min_value, max_value, selected_categories, search)
     categories = get_all_product_categories()
 
     return render_template("shop.html", products=products, categories=categories, orderBy=order,
@@ -71,12 +76,21 @@ def product():
     return render_template("product.html", product=p)
 
 
-@app.route('/cart')
+@app.route('/cart', methods=["GET", "POST"])
 def cart():
-    resp = make_response(render_template("cart.html"))
+    form = BuyNowForm()
+    if form.validate_on_submit():
+        return redirect(url_for("buy"))
+    resp = make_response(render_template("cart.html", form=form))
     product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
     resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
     return resp
+
+
+@app.route('/buy')
+@login_required
+def buy():
+    return render_template("buy.html")
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -87,6 +101,9 @@ def register():
         firstname = form.firstname.data
         lastname = form.lastname.data
         email = form.email.data
+        if get_customer_by_email(email) is not None:
+            flash(f"The email '{email}' is already in use. Please choose another one.")
+            return redirect(url_for("register"))
         phone = form.phone.data
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         street = form.street.data
@@ -148,7 +165,6 @@ def logout():
 def profile():
     user = get_customer_by_id(session['user_id'])
     address = get_address_by_id(user.default_address_id)
-    print(address)
     return render_template("profile.html", user=user, address=address)
 
 

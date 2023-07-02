@@ -11,6 +11,7 @@ def create_table_product():
           quantity_g INTEGER,
           price REAL,
           amount_in_stock INTEGER,
+          creation_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY(product_category_id) REFERENCES product_category(product_category_id)
         );
     """)
@@ -27,6 +28,45 @@ def add_new_product(name, description, product_category_id, quantity_g, price, a
 
 def get_all_products() -> list:
     cur.execute("SELECT * FROM product")
+    product_list = []
+    for row in cur:
+        product_list.append(dict(zip([c[0] for c in cur.description], row)))
+    return product_list
+
+
+def get_products_filtered(order_by, price_min, price_max, categories, search) -> list:
+    sql_order_by = "creation_timestamp DESC"  # that's the default order (if order_by == "newest")
+    if order_by == "oldest":
+        sql_order_by = "creation_timestamp"
+    elif order_by == "price_asc":
+        sql_order_by = "price"
+    elif order_by == "price_desc":
+        sql_order_by = "price DESC"
+
+    sql_selected_cats_str = ""
+    if len(categories) > 0:
+        sql_selected_cats = [f"product_category_id={cat}" for cat in categories.split("+")]
+        sql_selected_cats_str = " OR ".join(sql_selected_cats)
+        sql_selected_cats_str = f"AND ({sql_selected_cats_str})"
+
+    sql_search_str = ""
+    if len(search) > 0:
+        search_key_words_for_name = [f"name LIKE '%{key_word}%'" for key_word in search.split("+")]
+        search_key_words_for_desc = [f"description LIKE '%{key_word}%'" for key_word in search.split("+")]
+        search_key_words = search_key_words_for_name + search_key_words_for_desc
+        sql_search_str = " OR ".join(search_key_words)
+        sql_search_str = f"AND ({sql_search_str})"
+
+    sql_query = f"""
+    SELECT * FROM product 
+    WHERE price >= {price_min} AND price <= {price_max}
+    {sql_selected_cats_str}
+    {sql_search_str}
+    ORDER BY {sql_order_by}
+    """
+    print(sql_query)
+    cur.execute(sql_query)
+
     product_list = []
     for row in cur:
         product_list.append(dict(zip([c[0] for c in cur.description], row)))

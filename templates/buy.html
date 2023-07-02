@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block body %}
+<div style="margin: 0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <!-- Top div with sort by and search -->
+                <div class="card" style="margin-top: 20px; border-radius: 0">
+
+                    <div class="stepper-wrapper">
+                        <div class="stepper-item active" id="stepper_step_1" onclick="goToStep1()">
+                            <div class="step-counter">1</div>
+                        <div class="step-name">Lieferadresse</div>
+                    </div>
+                    <div class="stepper-item" id="stepper_step_2" onclick="goToStep2()">
+                        <div class="step-counter">2</div>
+                        <div class="step-name">Zahlungsmethode</div>
+                    </div>
+                    <div class="stepper-item" id="stepper_step_3" onclick="goToStep3()">
+                        <div class="step-counter">3</div>
+                            <div class="step-name">Bestellung abgeschlossen</div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div id="stepper_container" class="register-container">
+                        <div id="step_1" style="display: block">
+                            <div style="height: 500px">
+                                {% include 'buy/delivery_step.html' %}
+                            </div>
+                        </div>
+                        <div id="step_2" style="display: none">
+                            <div style="height: 500px">
+                                {% include 'buy/payment_step.html' %}
+                            </div>
+                        </div>
+                        <div id="step_3" style="display: none">
+                            <div style="height: 500px">
+                                <div style="height: 130px"></div>
+                                {% include 'buy/finished_step.html' %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div style="padding: 0 15% 20px 15%">
+
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" id="button_previous" onclick="previousStep()" class='btn btn-outline-primary btn-rounded btn-block' style='display: block; border-color: #d18c09; color: #d18c09'>Zurück</button>
+                            </div>
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="button" id="button_next" onclick="nextStep()" class='btn btn-outline-primary btn-rounded btn-block' style='display: block; border-color: #d18c09; color: #d18c09'>Weiter</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        var step = 1;
+
+                        function nextStep() {
+                            if (step < 3) {
+                                step = step + 1;
+
+                                var step_containers = document.querySelectorAll('[id^="step_"]');
+                                for (var step_container of step_containers) {
+                                    step_container.setAttribute("style", "display: none");
+                                }
+
+                                document.getElementById('step_' + step).setAttribute("style", "display: block");
+                            }
+                        }
+
+                        function previousStep() {
+                            if (step > 1) {
+                                step = step - 1;
+
+                                var step_containers = document.querySelectorAll('[id^="step_"]');
+                                for (var step_container of step_containers) {
+                                    step_container.setAttribute("style", "display: none");
+                                }
+
+                                document.getElementById('step_' + step).setAttribute("style", "display: block");
+                            }
+                            if (step <= 1) {
+
+                            }
+                        }
+                    </script>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
