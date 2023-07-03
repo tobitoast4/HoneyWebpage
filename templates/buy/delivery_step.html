@@ -11,38 +11,44 @@
         In diesem Account hinterlegte Adresse verwenden
         </label>
     </div>
-    <form name="KaufForm" id="KaufForm" action="../php/BestellungVerarbeitung.php">
+
+
+    <div>
         <h2>Alternative Lieferadresse</h2>
         <h4 style="margin-top: 25px">Persönliche Angaben</h4>
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="vorname" name="altVorname" class="form-control" disabled />
+                    {{ form.firstname }}
                     <label class="form-label" for="typeText">Vorname*</label>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="nachname" name="altNachname" class="form-control" disabled />
+                    {{ form.lastname }}
                     <label class="form-label" for="typeText">Nachname*</label>
                 </div>
             </div>
         </div>
-        <div class="form-outline">
-            <input type="text" id="altemail" name="altEmail" class="form-control" disabled />
+        <div class="form-outline" style="margin-bottom: 15px">
+            {{ form.email }}
             <label class="form-label" for="typeText">E-Mail-Adresse*</label>
+        </div>
+        <div class="form-outline" style="margin-bottom: 15px">
+            {{ form.phone }}
+            <label class="form-label" for="typeText">Telefonnummer</label>
         </div>
         <h4 style="margin-top: 25px">Adressangaben</h4>
         <div class="row">
             <div class="col-sm-7">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="strasse" name="altStrasse" class="form-control" disabled />
+                    {{ form.street }}
                     <label class="form-label" for="typeText">Straße*</label>
                 </div>
             </div>
             <div class="col-sm-5">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="hausnummer" name="altHausnummer" class="form-control" disabled />
+                    {{ form.house_number }}
                     <label class="form-label" for="typeText">Hausnummer*</label>
                 </div>
             </div>
@@ -50,13 +56,13 @@
         <div class="row">
             <div class="col-sm-5">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="plz" name="altPLZ" class="form-control" disabled />
+                    {{ form.postal_code }}
                     <label class="form-label" for="typeText">Postleitzahl*</label>
                 </div>
             </div>
             <div class="col-sm-7">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="stadt" name="altStadt" class="form-control" disabled />
+                    {{ form.city }}
                     <label class="form-label" for="typeText">Stadt*</label>
                 </div>
             </div>
@@ -64,16 +70,34 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="land" name="altLand" class="form-control" disabled />
+                    {{ form.country }}
                     <label class="form-label" for="typeText">Land*</label>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-outline" style="margin-bottom: 15px">
-                    <input type="text" id="bundesland" name="altBundesland" class="form-control" disabled />
+                    {{ form.state }}
                     <label class="form-label" for="typeText">Bundesland</label>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+
+    <script>
+        function useAlternativeAddress() {
+            if (document.getElementById('useAlternativeAddress').checked) {
+                var inputs = document.querySelectorAll('[id^="alt_address_"]');
+                for (var input of inputs) {
+                    document.getElementById(input.id).setAttribute("disabled", "");
+                }
+            } else {
+                var inputs = document.querySelectorAll('[id^="alt_address_"]');
+                for (var input of inputs) {
+                    document.getElementById(input.id).removeAttribute("disabled");
+                }
+            }
+        }
+
+        useAlternativeAddress();
+    </script>
 </div>

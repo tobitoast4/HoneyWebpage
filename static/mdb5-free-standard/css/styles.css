@@ -91,3 +91,33 @@ Used this one in the end: https://mdbootstrap.com/support/standard/change-focus-
 .form-control:focus ~ .form-label {
     color: #d18c09 !important;
 }
+
+.itemCardPayment:hover {
+	cursor: pointer;
+	background-color: #f0f0f0
+}
+
+.itemCardPaymentSelected {
+	background-color: #f0f0f0
+}
+
+.custom-outlined-button {
+    display: block;
+    border-color: #d18c09;
+    color: #d18c09
+}
+
+.btn-check:focus+.btn-outline-primary, .btn-check:focus-visible+.btn-outline-primary, .btn-outline-primary:first-child:hover, .btn-outline-primary:focus, .btn-outline-primary:focus-visible, .btn-outline-primary:hover, :not(.btn-check)+.btn-outline-primary:hover {
+    border-color: #af7609;
+}
+
+.custom-outlined-button:hover {
+    display: block;
+    color: #af7609
+}
+
+.custom-filled-button {
+    border-color:#d18c09;
+    background-color: #d18c09;
+    color: white
+}

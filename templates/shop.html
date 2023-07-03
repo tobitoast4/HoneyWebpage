@@ -103,9 +103,8 @@
                                 {{ p["description"] }}
                                 {% endif %}
                             </p>
-                            <a class='btn btn-outline-primary btn-rounded '
-                               onclick="addProductToCart({{ p['product_id'] }}, 1)"
-                               style='display: block; border-color: #d18c09; color: #d18c09'>
+                            <a class='btn btn-outline-primary btn-rounded custom-outlined-button'
+                               onclick="addProductToCart({{ p['product_id'] }}, 1)">
                                 In den Warenkorb
                             </a>
                         </div>
@@ -142,9 +141,9 @@
                         {% include 'multislider.html' %}
 
                         <div style="padding-left: 5px; padding-right: 5px">
-                            <a class='btn btn-outline-primary btn-rounded '
+                            <a class='btn btn-outline-primary btn-rounded custom-outlined-button'
                                onclick="applyFilters()"
-                               style='display: block; border-color: #d18c09; color: #d18c09; margin-top: 50px'>
+                               style='margin-top: 50px'>
                                 Filter anwenden
                             </a>
                         </div>

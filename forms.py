@@ -33,3 +33,20 @@ class BuyNowForm(FlaskForm):
     privacy = BooleanField(validators=[InputRequired()], render_kw={"class": "form-check-input", "type": "checkbox"})
     submit = SubmitField("Zur Kasse", render_kw={"style": "display: block; background-color: #d18c09",
                                                  "class": "btn btn-primary btn-rounded"})
+
+
+class BuyForm(FlaskForm):
+    firstname = StringField(render_kw={"id": "alt_address_firstname", "class": "form-control"})
+    lastname = StringField(render_kw={"id": "alt_address_lastname", "class": "form-control"})
+    email = StringField(render_kw={"id": "alt_address_email", "class": "form-control"})
+    phone = StringField(render_kw={"id": "alt_address_phone", "class": "form-control"})
+    street = StringField(render_kw={"id": "alt_address_street", "class": "form-control"})
+    house_number = IntegerField(render_kw={"id": "alt_address_house_number", "class": "form-control"})
+    postal_code = IntegerField(render_kw={"id": "alt_address_postal_code", "class": "form-control"})
+    city = StringField(render_kw={"id": "alt_address_city", "class": "form-control"})
+    country = StringField(render_kw={"id": "alt_address_country", "class": "form-control"})
+    state = StringField(render_kw={"id": "alt_address_state", "class": "form-control"})
+    payment_method = StringField(render_kw={"id": "payment_method_field", "style": "display: none"})
+    submit = SubmitField("Bestellung bestätigen und abschließen",
+                         render_kw={"style": "display: none; border-color:#d18c09; background-color: #d18c09; color: white",
+                                    "class": "btn btn-outline-primary btn-rounded btn-block", "id": "button_confirm_order"})

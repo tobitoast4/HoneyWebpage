@@ -7,7 +7,7 @@ from user import User
 
 import urllib.parse
 
-from forms import RegisterForm, LoginForm, BuyNowForm
+from forms import RegisterForm, LoginForm, BuyNowForm, BuyForm
 from database.database import *
 
 
@@ -87,10 +87,22 @@ def cart():
     return resp
 
 
-@app.route('/buy')
+@app.route('/buy', methods=["GET", "POST"])
 @login_required
 def buy():
-    return render_template("buy.html")
+    form = BuyForm()
+    if form.validate_on_submit():
+        return redirect(url_for("order_finished"))
+    resp = make_response(render_template("buy.html", form=form))
+    product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
+    resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
+    return resp
+
+
+@app.route('/order_finished')
+@login_required
+def order_finished():
+    return render_template("order_finished.html")
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -150,7 +162,6 @@ def login():
 
 
 @app.route("/logout", methods=["GET"])
-@login_required
 def logout():
     session['logged_in'] = False
     session.pop('user_id', None)

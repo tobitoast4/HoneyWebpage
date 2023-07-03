@@ -1,63 +1,84 @@
 <div>
     <div class="card itemCard">
         <ul class="list-group list-group-flush" id="list_of_elements_in_chart">
-            <!-- Paypal payment: See https://developer.paypal.com/dashboard/ and
-                https://developer.paypal.com/api/nvp-soap/paypal-payments-standard/integration-guide/checkout-exp-buy-now/ -->
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                <!-- Identify your business so that you can collect the payments. -->
-                <input type="hidden" name="business" value="markuszillmann@gmx.de">
-                <!-- Specify a Buy Now button. --> <input type="hidden" name="cmd" value="_xclick">
-                <!-- Specify details about the item that buyers will purchase. -->
-                <input type="hidden" name="item_name" value="Test">
-                <input type="hidden" name="amount" value="0.01">
-                <input type="hidden" name="currency_code" value="EUR">
-                <INPUT TYPE="hidden" NAME="return" value="www.google.de">
-                <!-- Display the payment button. -->
-                <input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="Buy Now">
-                <img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
-            </form>
-            <li class="list-group-item itemCardPayment" id="payment_paypal" onclick="selectPaypal()">
+            <li class="list-group-item itemCardPayment" id="payment_method_paypal" onclick="selectPaymentMethod('paypal')">
                 <div class="row">
-                    <div class="col-md-5 col-10">
-                        <img src="https://rgblog.exali.de/wp-content/uploads/2018/01/paypal-784404_1280.png" height="60px" />
+                    <div class="col-md-5 col-10" style="padding-top: 5px">
+                        <img src="{{ url_for('static', filename='img/icon_paypal.png' )}}" height="45px" />
                     </div>
                     <div class="col-6 d-flex align-items-center d-md-block d-none">
                         <h4 style="padding-top: 17px; margin-left: 3%">PayPal</h4>
                     </div>
                     <div class="col-1 d-flex align-items-center">
-                        <i id="checkmark_paypal" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                        <i id="payment_checkmark_paypal" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
                     </div>
                 </div>
             </li>
-            <li class="list-group-item itemCardPayment" id="payment_credit" onclick="selectCreditcard()">
+            <li class="list-group-item itemCardPayment" id="payment_method_credit_card" onclick="selectPaymentMethod('credit_card')">
                 <div class="row">
-                    <div class="col-md-5 col-10">
-                        <img src="../img/kreditkarte.png" height="60px" width="210px" />
+                    <div class="col-md-5 col-10" style="padding-top: 5px">
+                        <img src="{{ url_for('static', filename='img/icon_credit_card.png' )}}" height="45px" />
                     </div>
                     <div class="col-6 d-flex align-items-center d-md-block d-none">
                         <h4 style="padding-top: 17px; margin-left: 3%">Kreditkarte</h4>
                     </div>
                     <div class="col-1 d-flex align-items-center">
-                        <i id="checkmark_credit" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                        <i id="payment_checkmark_credit_card" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
                     </div>
                 </div>
             </li>
-            <li class="list-group-item itemCardPayment" id="payment_giro" onclick="selectGiropay()">
+            <li class="list-group-item itemCardPayment" id="payment_method_giro" onclick="selectPaymentMethod('giro')">
                 <div class="row">
-                    <div class="col-md-5 col-10">
-                        <img src="https://www.giropay.de/fileadmin/user_upload/giropay/logos/giropay_960px_color_rgb.png" height="60px" />
+                    <div class="col-md-5 col-10" style="padding-top: 5px">
+                        <img src="{{ url_for('static', filename='img/icon_giropay.png' )}}" height="45px" />
                     </div>
                     <div class="col-6 d-flex align-items-center d-md-block d-none">
                         <h4 style="padding-top: 17px; margin-left: 3%">GiroPay</h4>
                     </div>
                     <div class="col-1 d-flex align-items-center">
-                        <i id="checkmark_giro" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                        <i id="payment_checkmark_giro" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item itemCardPayment" id="payment_method_bank_transfer" onclick="selectPaymentMethod('bank_transfer')">
+                <div class="row">
+                    <div class="col-md-5 col-10" style="padding-top: 5px">
+                        <img src="{{ url_for('static', filename='img/icon_bank_transfer.png' )}}" height="45px" />
+                    </div>
+                    <div class="col-6 d-flex align-items-center d-md-block d-none">
+                        <h4 style="padding-top: 17px; margin-left: 3%">Überweisung</h4>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <i id="payment_checkmark_bank_transfer" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
+    <br/>
+    {{ form.payment_method }}
+
     <div id="payment_alert" style="background-color: #ff9c9c; color: #6e0000; padding: 15px; margin-top: 20px; border-radius: 4px; display: none">
         Bitte wähle eine Zahlungsmethode aus.
     </div>
+
+    <script>
+        function selectPaymentMethod(new_payment_method) {
+            var payment_methods = document.querySelectorAll('[id^="payment_method_"]');
+            for (var payment_method of payment_methods) {
+                document.getElementById(payment_method.id).setAttribute("class", "list-group-item itemCardPayment");
+            }
+
+            var payment_checkmarks = document.querySelectorAll('[id^="payment_checkmark_"]');
+            for (var payment_checkmark of payment_checkmarks) {
+                document.getElementById(payment_checkmark.id).setAttribute("style", "padding-top: 3px; margin-right: 3%; display: none");
+            }
+
+
+            document.getElementById('payment_method_' + new_payment_method).setAttribute("class", "list-group-item itemCardPaymentSelected");
+            document.getElementById('payment_checkmark_' + new_payment_method).setAttribute("style", "padding-top: 3px; margin-right: 3%; display: block");
+
+            document.getElementById('payment_method_field').value = new_payment_method;
+        }
+    </script>
 </div>

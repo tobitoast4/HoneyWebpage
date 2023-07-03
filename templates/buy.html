@@ -24,38 +24,52 @@
 
                     <hr />
 
-                    <div id="stepper_container" class="register-container">
-                        <div id="step_1" style="display: block">
-                            <div style="height: 500px">
-                                {% include 'buy/delivery_step.html' %}
-                            </div>
-                        </div>
-                        <div id="step_2" style="display: none">
-                            <div style="height: 500px">
-                                {% include 'buy/payment_step.html' %}
-                            </div>
-                        </div>
-                        <div id="step_3" style="display: none">
-                            <div style="height: 500px">
-                                <div style="height: 130px"></div>
-                                {% include 'buy/finished_step.html' %}
-                            </div>
-                        </div>
-                    </div>
 
-                    <hr />
-
-                    <div style="padding: 0 15% 20px 15%">
-
-                        <div class="row">
-                            <div class="col-6">
-                                <button type="button" id="button_previous" onclick="previousStep()" class='btn btn-outline-primary btn-rounded btn-block' style='display: block; border-color: #d18c09; color: #d18c09'>Zurück</button>
+<!--                    <form method="POST" action="">-->
+                        {{ form.hidden_tag() }}
+                        <div id="stepper_container" class="register-container">
+                            <div id="step_1" style="display: block">
+                                <div style="height: 600px">
+                                    {% include 'buy/delivery_step.html' %}
+                                </div>
                             </div>
-                            <div class="col-6 d-flex justify-content-end">
-                                <button type="button" id="button_next" onclick="nextStep()" class='btn btn-outline-primary btn-rounded btn-block' style='display: block; border-color: #d18c09; color: #d18c09'>Weiter</button>
+                            <div id="step_2" style="display: none">
+                                <div style="height: 600px">
+                                    {% include 'buy/payment_step.html' %}
+                                </div>
+                            </div>
+                            <div id="step_3" style="display: none">
+                                <div style="height: 600px">
+                                    <div style="height: 130px"></div>
+                                    {% include 'buy/finish_step.html' %}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <hr />
+                        <div style="padding: 0 15% 20px 15%">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button"
+                                            id="button_previous"
+                                            onclick="previousStep()"
+                                            class='btn btn-outline-primary btn-rounded btn-block custom-outlined-button'>
+                                        Zurück
+                                    </button>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-end">
+                                    <button type="button"
+                                            id="button_next"
+                                            onclick="nextStep()"
+                                            class='btn btn-outline-primary btn-rounded btn-block custom-outlined-button'>
+                                        Weiter
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px"></div>
+                            {{ form.submit }}
+                        </div>
+<!--                    </form>-->
 
                     <script>
                         var step = 1;
@@ -70,6 +84,9 @@
                                 }
 
                                 document.getElementById('step_' + step).setAttribute("style", "display: block");
+                                if (step == 3){
+                                    document.getElementById('button_confirm_order').setAttribute("style", "border-color:#d18c09; background-color: #d18c09; color: white");
+                                }
                             }
                         }
 
