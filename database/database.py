@@ -1,3 +1,5 @@
+import time
+
 from database._address import *
 from database._customer import *
 from database._customer_order import *
@@ -7,6 +9,17 @@ from database._payment_method import *
 from database._product import *
 from database._product_category import *
 from database._recipient import *
+
+DEFAULT_DELIVERY_COST = 5.5
+
+
+# insert_new_order(1, 1, 1, 1, {1: 2, 2: 2})
+def insert_new_order(customer_id, recipient_id, order_state_id, payment_method_id, products: dict):
+    new_order_id = add_new_customer_order(DEFAULT_DELIVERY_COST, customer_id, recipient_id, order_state_id, payment_method_id)
+    for product_id in products:
+        single_price = get_one_product(product_id)[0]["price"]
+        amount = products[product_id]
+        add_new_customer_order_product(new_order_id, product_id, amount, single_price)
 
 
 def get_amount_tables_in_db():
@@ -36,6 +49,8 @@ def create_tables():
 
 
 def insert_default_values():
+    insert_default_payment_methods()
+    insert_default_order_states()
     insert_default_product_categories()
     insert_default_products()
 

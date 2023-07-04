@@ -64,7 +64,6 @@ def get_products_filtered(order_by, price_min, price_max, categories, search) ->
     {sql_search_str}
     ORDER BY {sql_order_by}
     """
-    print(sql_query)
     cur.execute(sql_query)
 
     product_list = []

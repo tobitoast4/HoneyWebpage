@@ -24,22 +24,36 @@
 
                     <hr />
 
+                    <div id="step_1_checkbox" class="register-container">
+                        <div class="form-check" style="margin-top: 35px">
+                            <input name="useAlternativeAdresse"
+                                class="form-check-input"
+                                type="checkbox"
+                                value=""
+                                id="useAlternativeAddress"
+                                onclick="useAlternativeAddress()"
+                                checked />
+                            <label class="form-check-label" for="flexCheckChecked">
+                            In diesem Account hinterlegte Adresse verwenden
+                            </label>
+                        </div>
+                    </div>
 
-<!--                    <form method="POST" action="">-->
+                    <form method="POST" action="">
                         {{ form.hidden_tag() }}
                         <div id="stepper_container" class="register-container">
                             <div id="step_1" style="display: block">
-                                <div style="height: 600px">
+                                <div style="height: 650px">
                                     {% include 'buy/delivery_step.html' %}
                                 </div>
                             </div>
                             <div id="step_2" style="display: none">
-                                <div style="height: 600px">
+                                <div style="height: 650px">
                                     {% include 'buy/payment_step.html' %}
                                 </div>
                             </div>
                             <div id="step_3" style="display: none">
-                                <div style="height: 600px">
+                                <div style="height: 650px">
                                     <div style="height: 130px"></div>
                                     {% include 'buy/finish_step.html' %}
                                 </div>
@@ -47,7 +61,7 @@
                         </div>
                         <hr />
                         <div style="padding: 0 15% 20px 15%">
-
+                            {{ form.products_as_dict }}
                             <div class="row">
                                 <div class="col-md-6">
                                     <button type="button"
@@ -69,7 +83,7 @@
                             <div style="margin-bottom: 8px"></div>
                             {{ form.submit }}
                         </div>
-<!--                    </form>-->
+                    </form>
 
                     <script>
                         var step = 1;
@@ -100,11 +114,21 @@
                                 }
 
                                 document.getElementById('step_' + step).setAttribute("style", "display: block");
+                                if (step == 1) {
+                                    document.getElementById('step_1_checkbox').setAttribute("style", "display: block");
+                                }
                             }
                             if (step <= 1) {
 
                             }
                         }
+                    </script>
+
+                    <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/cart.js' )}}"></script>
+                    <script>
+                        var cart_cookie = JSON.parse(getCookie("cart_cookie"));
+                        console.log(cart_cookie);
+                        document.getElementById('products_field').value = JSON.stringify(cart_cookie);
                     </script>
 
 

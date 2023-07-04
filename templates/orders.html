@@ -5,8 +5,169 @@
         <div class="row">
             <div class="col-md">
                 <!-- Top div with sort by and search -->
-                <div class="card" style="margin-top: 20px; border-radius: 0">
+                <div class="card" style="margin-top: 20px; border-radius: 0; padding: 3rem">
+
+
                     <h3>Bestellungen</h3>
+
+
+                    <div class="accordion" id="accordionExample">
+
+
+                        {% for order in orders %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading_{{ order['order_id'] }}">
+                                <button class="accordion-button collapsed"
+                                    type="button"
+                                    data-mdb-toggle="collapse"
+                                    data-mdb-target="#collapse_{{ order['order_id'] }}"
+                                    aria-expanded="false"
+                                    aria-controls="collapse_{{ order['order_id'] }}">
+                                    <div class="row" style="width: 100%">
+                                        <div class="col-8">
+                                            Bestellung vom {{ order['order_timestamp'] }}
+                                        </div>
+                                        <div class="col-4 d-flex justify-content-end">
+                                            Status: {{ order['order_state_id'] }}
+                                        </div>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="collapse_{{ order['order_id'] }}" class="accordion-collapse collapse" aria-labelledby="heading_{{ order['order_id'] }}" data-mdb-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-sm-8 col-7">
+                                            <h6 style="padding-top: 10px; padding-left: 20px">Produkt </h6>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-3">
+                                            <h6 style="padding-top: 10px">Anzahl </h6>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-2 d-flex justify-content-end">
+                                            <h6 style="padding-top: 10px; padding-right: 20px">Preis</h6>
+                                        </div>
+                                    </div>
+                                    <div style="height: 2px; background-color: gainsboro"></div>
+
+                                    <ul class="list-group list-group-flush" id="list_of_elements_in_cart">
+                                        {% for product in order["products"] %}
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-8 col-sm-8 col-7">
+                                                    <div class="row">
+                                                        <div class="col-lg-2 col-3 d-md-block d-none">
+                                                            <img src="../img/' . ($packung_id) . '.png" height="60px" />
+                                                        </div>
+                                                        <div class="col-lg-10 col-md-9 col-12 d-flex align-items-center">
+                                                            <h5 style="padding-top: 7px">($produktbezeichnung){{ product["product_id"] }}</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-3 d-flex align-items-center">
+                                                    <h6 style="padding-top: 7px; margin-left: 5%">{{ product["amount"] }}</h6>
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-2 d-flex align-items-center justify-content-end">
+                                                    <h6 style="padding-top: 7px; margin-left: 5%">Single {{ product["price_single"] }} €</h6>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    <div style="height: 1px; background-color: gainsboro"></div>
+                                    <div class="row" style="padding: 2% 2%; font-size: small">
+                                        <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Bestelldatum:
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    {{ order['order_timestamp'][:10] }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Versanddatum:
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($versanddatum)
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Bestell-Nr:
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($bestellung_id)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 d-flex justify-content-center">
+                                            <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Lieferadresse:
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($strasse_hausnummer)
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($plz_stadt)
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($lieferadresse_land)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 d-flex justify-content-center">
+                                            <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Gesamtpreis:
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($preis_summe) €
+                                                </div>
+                                                <div class="col-6">
+                                                    Davon MwSt (19%):
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($preis_mwst) €
+                                                </div>
+                                                <div class="col-6">
+                                                    Versandkosten:
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    ($versandkosten) €
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+
+
+                    </div>
                 </div>
             </div>
         </div>

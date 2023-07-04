@@ -71,33 +71,9 @@ function getCookie(cname) {
     return "{}";
 }
 
-
-function removeCartRow(packung_id, element_to_remove, name) {
-    var cart_cookie = JSON.parse(getCookie("cart_cookie"));
-    delete cart_cookie[packung_id];
-    document.cookie = "cart_cookie=" + JSON.stringify(cart_cookie) + "; path=/";
-
-    document.getElementById(element_to_remove).remove();
-
-    new Notify({
-        title: "Aus Einkaufswagen entfernt",
-        text: name,
-        effect: 'slide',
-        speed: 300,
-        status: 'warning',
-        autoclose: true,
-        autotimeout: 3500,
-        position: 'right bottom',
-        gap: 20,
-        distance: 70
-    })
-
-    updateTotalPrice();
-    setTotalAmountOfProductsInCart();
+function clearCartCookie(){
+    document.cookie = "cart_cookie={}; path=/";
 }
-
-
-
 
 function updateAmountOfProduct(packung_id, element_changed, element_to_update, single_price) {
 

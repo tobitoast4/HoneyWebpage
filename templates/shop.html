@@ -98,7 +98,7 @@
                             <h5 class="card-title">{{ p["name"] }}</h5>
                             <p class="card-text">
                                 {% if p["description"]|length > 90 %}
-                                {{ p["description"][:90] }}... <a href="">weiter lesen</a>"
+                                {{ p["description"][:90] }}... <a href="/product?id={{ p['product_id'] }}">weiter lesen</a>"
                                 {% else %}
                                 {{ p["description"] }}
                                 {% endif %}

@@ -1,58 +1,21 @@
 <div>
     <div class="card itemCard">
         <ul class="list-group list-group-flush" id="list_of_elements_in_chart">
-            <li class="list-group-item itemCardPayment" id="payment_method_paypal" onclick="selectPaymentMethod('paypal')">
-                <div class="row">
-                    <div class="col-md-5 col-10" style="padding-top: 5px">
-                        <img src="{{ url_for('static', filename='img/icon_paypal.png' )}}" height="45px" />
+            {% for p in payment_methods %}
+                <li class="list-group-item itemCardPayment" id="payment_method_{{ p['payment_method_id'] }}" onclick="selectPaymentMethod('{{ p['payment_method_id'] }}')">
+                    <div class="row">
+                        <div class="col-md-5 col-10" style="padding-top: 5px">
+                            <img src="static/img/payment_icons/{{ p['payment_method_id'] }}.png" height="45px" />
+                        </div>
+                        <div class="col-6 d-flex align-items-center d-md-block d-none">
+                            <h4 style="padding-top: 17px; margin-left: 3%">{{ p['description'] }}</h4>
+                        </div>
+                        <div class="col-1 d-flex align-items-center">
+                            <i id="payment_checkmark_{{ p['payment_method_id'] }}" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
+                        </div>
                     </div>
-                    <div class="col-6 d-flex align-items-center d-md-block d-none">
-                        <h4 style="padding-top: 17px; margin-left: 3%">PayPal</h4>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <i id="payment_checkmark_paypal" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item itemCardPayment" id="payment_method_credit_card" onclick="selectPaymentMethod('credit_card')">
-                <div class="row">
-                    <div class="col-md-5 col-10" style="padding-top: 5px">
-                        <img src="{{ url_for('static', filename='img/icon_credit_card.png' )}}" height="45px" />
-                    </div>
-                    <div class="col-6 d-flex align-items-center d-md-block d-none">
-                        <h4 style="padding-top: 17px; margin-left: 3%">Kreditkarte</h4>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <i id="payment_checkmark_credit_card" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item itemCardPayment" id="payment_method_giro" onclick="selectPaymentMethod('giro')">
-                <div class="row">
-                    <div class="col-md-5 col-10" style="padding-top: 5px">
-                        <img src="{{ url_for('static', filename='img/icon_giropay.png' )}}" height="45px" />
-                    </div>
-                    <div class="col-6 d-flex align-items-center d-md-block d-none">
-                        <h4 style="padding-top: 17px; margin-left: 3%">GiroPay</h4>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <i id="payment_checkmark_giro" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item itemCardPayment" id="payment_method_bank_transfer" onclick="selectPaymentMethod('bank_transfer')">
-                <div class="row">
-                    <div class="col-md-5 col-10" style="padding-top: 5px">
-                        <img src="{{ url_for('static', filename='img/icon_bank_transfer.png' )}}" height="45px" />
-                    </div>
-                    <div class="col-6 d-flex align-items-center d-md-block d-none">
-                        <h4 style="padding-top: 17px; margin-left: 3%">Überweisung</h4>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <i id="payment_checkmark_bank_transfer" class="fas fa-check" style="padding-top: 7px; margin-right: 3%; display: none"></i>
-                    </div>
-                </div>
-            </li>
+                </li>
+            {% endfor %}
         </ul>
     </div>
     <br/>

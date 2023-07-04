@@ -66,15 +66,15 @@ def get_customer_by_email(email_address):
                 c["password"], c["phone_number"], c["default_address_id"])
 
 
-# def get_customer_with_address_by_id(customer_id):
-#     cur.execute(f"""
-#         SELECT *
-#         FROM customer
-#         LEFT OUTER JOIN address
-#         ON customer.default_address_id = address.address_id
-#         WHERE customer_id="{customer_id}";
-#     """)
-#     customers = []
-#     for row in cur:
-#         customers.append(dict(zip([c[0] for c in cur.description], row)))
-#     return customers
+def get_customer_with_address_by_id(customer_id):
+    cur.execute(f"""
+        SELECT *
+        FROM customer
+        LEFT OUTER JOIN address
+        ON customer.default_address_id = address.address_id
+        WHERE customer_id="{customer_id}";
+    """)
+    customers = []
+    for row in cur:
+        customers.append(dict(zip([c[0] for c in cur.description], row)))
+    return customers

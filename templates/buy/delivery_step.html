@@ -1,18 +1,4 @@
 <div>
-    <div class="form-check" style="margin-bottom: 35px">
-        <input name="useAlternativeAdresse"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="useAlternativeAddress"
-            onclick="useAlternativeAddress()"
-            checked />
-        <label class="form-check-label" for="flexCheckChecked">
-        In diesem Account hinterlegte Adresse verwenden
-        </label>
-    </div>
-
-
     <div>
         <h2>Alternative Lieferadresse</h2>
         <h4 style="margin-top: 25px">Persönliche Angaben</h4>
@@ -30,10 +16,12 @@
                 </div>
             </div>
         </div>
-        <div class="form-outline" style="margin-bottom: 15px">
+        <div class="form-outline">
             {{ form.email }}
             <label class="form-label" for="typeText">E-Mail-Adresse*</label>
         </div>
+        <p style="margin-bottom: 15px; font-size: 13px">An diese Adresse senden wir die Bestell- / Versandbestätigung.</p>
+
         <div class="form-outline" style="margin-bottom: 15px">
             {{ form.phone }}
             <label class="form-label" for="typeText">Telefonnummer</label>
@@ -71,7 +59,7 @@
             <div class="col-sm-6">
                 <div class="form-outline" style="margin-bottom: 15px">
                     {{ form.country }}
-                    <label class="form-label" for="typeText">Land*</label>
+                    <label class="form-label" for="typeText">Land</label>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -89,11 +77,16 @@
                 var inputs = document.querySelectorAll('[id^="alt_address_"]');
                 for (var input of inputs) {
                     document.getElementById(input.id).setAttribute("disabled", "");
+                    document.getElementById(input.id).removeAttribute("required");
                 }
             } else {
                 var inputs = document.querySelectorAll('[id^="alt_address_"]');
                 for (var input of inputs) {
                     document.getElementById(input.id).removeAttribute("disabled");
+                    console.log(input.id);
+                    if (input.id != "alt_address_phone" || input.id != "alt_address_country" || input.id != "alt_address_state") {
+                        document.getElementById(input.id).setAttribute("required", "");
+                    }
                 }
             }
         }

@@ -6,6 +6,7 @@ from wtforms.validators import ValidationError
 from user import User
 
 import urllib.parse
+import json
 
 from forms import RegisterForm, LoginForm, BuyNowForm, BuyForm
 from database.database import *
@@ -22,8 +23,6 @@ login_manager.login_view = "login"
 
 @login_manager.user_loader
 def load_user(customer_id):
-    print("load_user(email)")
-    print(customer_id)
     return get_customer_by_id(customer_id)  # get this data from database
 
 
@@ -92,8 +91,30 @@ def cart():
 def buy():
     form = BuyForm()
     if form.validate_on_submit():
+        firstname = form.firstname.data
+        lastname = form.lastname.data
+        email = form.email.data
+        phone = form.phone.data
+        street = form.street.data
+        house_number = form.house_number.data
+        postal_code = form.postal_code.data
+        city = form.city.data
+        country = form.country.data
+        state = form.state.data
+
+        current_user_id = current_user.id
+        recipient_id = current_user.id          # TODO: CHANGE THIS
+        order_state_id = 1                      # TODO: CHANGE THIS
+        payment_method = form.payment_method.data
+        products_as_dict_str = form.products_as_dict.data
+
+        products_as_dict_str = products_as_dict_str.replace("'", "\"")
+        products_as_dict = json.loads(products_as_dict_str)
+        insert_new_order(current_user_id, recipient_id, order_state_id, payment_method, products_as_dict)
+
         return redirect(url_for("order_finished"))
-    resp = make_response(render_template("buy.html", form=form))
+    payment_methods = get_all_payment_methods()
+    resp = make_response(render_template("buy.html", form=form, payment_methods=payment_methods))
     product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
     resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
     return resp
@@ -182,7 +203,15 @@ def profile():
 @app.route('/orders')
 @login_required
 def orders():
-    return render_template("orders.html")
+    current_user_id = current_user.id
+    orders_of_user = get_customer_orders_by_customer_id(current_user_id)
+    for order in orders_of_user:
+        order_id = order["order_id"]
+        products_of_order = get_customer_order_product_by_customer_order_id(order_id)
+        order["products"] = products_of_order
+    print(orders_of_user)
+
+    return render_template("orders.html", orders=orders_of_user)
 
 
 @app.route('/settings')

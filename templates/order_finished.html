@@ -25,12 +25,17 @@
 
                     <div style="padding: 0 20% 20px 20%">
                             <div>
-                                <button type="button" class='btn btn-outline-primary btn-rounded btn-block custom-outlined-button'>
+                                <button type="button" class='btn btn-outline-primary btn-rounded btn-block custom-outlined-button' onclick="window.location='/'">
                                     Zurück zur Startseite
                                 </button>
                             </div>
                         </div>
                     </div>
+
+                    <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/cart.js' )}}"></script>
+                    <script>
+                        clearCartCookie();
+                    </script>
 
                 </div>
             </div>
