@@ -68,12 +68,14 @@
                     <label class="form-label" for="typeText">Bundesland</label>
                 </div>
             </div>
+            {{ form.use_alt_delivery_address }}
         </div>
     </div>
 
     <script>
         function useAlternativeAddress() {
             if (document.getElementById('useAlternativeAddress').checked) {
+                document.getElementById('use_alt_delivery_address').value = "false";
                 var inputs = document.querySelectorAll('[id^="alt_address_"]');
                 for (var input of inputs) {
                     document.getElementById(input.id).setAttribute("disabled", "");
@@ -81,10 +83,11 @@
                 }
             } else {
                 var inputs = document.querySelectorAll('[id^="alt_address_"]');
+                document.getElementById('use_alt_delivery_address').value = "true";
                 for (var input of inputs) {
                     document.getElementById(input.id).removeAttribute("disabled");
                     console.log(input.id);
-                    if (input.id != "alt_address_phone" || input.id != "alt_address_country" || input.id != "alt_address_state") {
+                    if (input.id != "alt_address_phone" && input.id != "alt_address_country" && input.id != "alt_address_state") {
                         document.getElementById(input.id).setAttribute("required", "");
                     }
                 }

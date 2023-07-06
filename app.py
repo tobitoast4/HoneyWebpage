@@ -87,7 +87,7 @@ def cart():
     form = BuyNowForm()
     if form.validate_on_submit():
         return redirect(url_for("buy"))
-    resp = make_response(render_template("cart.html", form=form))
+    resp = make_response(render_template("cart.html", form=form, delivery_cost=DEFAULT_DELIVERY_COST))
     product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
     resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
     return resp
@@ -98,19 +98,23 @@ def cart():
 def buy():
     form = BuyForm()
     if form.validate_on_submit():
-        firstname = form.firstname.data
-        lastname = form.lastname.data
-        email = form.email.data
-        phone = form.phone.data
-        street = form.street.data
-        house_number = form.house_number.data
-        postal_code = form.postal_code.data
-        city = form.city.data
-        country = form.country.data
-        state = form.state.data
-
+        use_alt_delivery_address = form.use_alt_delivery_address.data
+        if use_alt_delivery_address == "true":
+            firstname = form.firstname.data
+            lastname = form.lastname.data
+            email = form.email.data
+            phone = form.phone.data
+            street = form.street.data
+            house_number = form.house_number.data
+            postal_code = form.postal_code.data
+            city = form.city.data
+            country = form.country.data
+            state = form.state.data
+            address_id = add_new_address(street, house_number, postal_code, city, country, state)
+            recipient_id = add_new_recipient(firstname, lastname, email, phone, address_id)
+        else:
+            recipient_id = current_user.id
         current_user_id = current_user.id
-        recipient_id = current_user.id          # TODO: CHANGE THIS
         order_state_id = 1                      # TODO: CHANGE THIS
         payment_method = form.payment_method.data
         products_as_dict_str = form.products_as_dict.data
@@ -219,7 +223,7 @@ def orders():
         if order["recipient_id"] == order["customer_id"]:  # recipient is same as customer
             order["delivery_data"] = get_customer_with_address_by_id(order["customer_id"])[0]
         else:
-            order["delivery_data"] = get_customer_with_address_by_id(order["customer_id"])  # TODO chnage this to correct recipient
+            order["delivery_data"] = get_recipient_with_address_by_id(order["recipient_id"])[0]
     print(orders_of_user)
 
     return render_template("orders.html", orders=orders_of_user)

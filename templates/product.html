@@ -42,7 +42,7 @@
                                         <a onclick="addToCart()" class='btn btn-outline-primary btn-rounded custom-outlined-button'>In den Warenkorb</a>
                                         <script>
                                             function addToCart() {
-                                                addProductToCart({{ product[0]['product_id'] }}, document.getElementById("current_product_count").value);
+                                                addProductToCart({{ product[0]['product_id'] }}, "{{ product[0]['name'] }}", document.getElementById("current_product_count").value);
                                             }
                                         </script>
                                     </div>

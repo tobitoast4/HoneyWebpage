@@ -1,8 +1,6 @@
-function addProductToCart(product_id, product_count) {
-
-    var product_name = "PRODUCT_TEST"
+function addProductToCart(product_id, product_name, product_count) {
     var notifyPName = product_name;
-    if (product_count != 1) notifyPName = "(" + product_count + "x) " + product_name;
+    if (product_count != 1) notifyPName = "" + product_name + " (" + product_count + "x)";
 
     new Notify({
         title: unescape("Zu Einkaufswagen hinzugef%FCgt"),
@@ -129,13 +127,13 @@ function updateTotalPrice() {
         sum = sum + parseFloat((all_price_elements[i].innerHTML).replace(",", "."));
     }
 
-    sum_total = sum.toFixed(2) + " EUR";
+    sum_total = sum.toFixed(2) + " €";
     sum_total = sum_total.replace(".", ",");
 
     document.getElementById("total_price").innerHTML = sum_total;
 
     sum_mwst = sum * 0.19;
-    sum_mwst = sum_mwst.toFixed(2) + " EUR";
+    sum_mwst = sum_mwst.toFixed(2) + " €";
     sum_mwst = sum_mwst.replace(".", ",");
 
     document.getElementById("mwst_price").innerHTML = sum_mwst;

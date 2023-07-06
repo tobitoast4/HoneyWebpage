@@ -46,6 +46,7 @@ class BuyForm(FlaskForm):
     city = StringField(render_kw={"id": "alt_address_city", "class": "form-control"})
     country = StringField(render_kw={"id": "alt_address_country", "class": "form-control"})
     state = StringField(render_kw={"id": "alt_address_state", "class": "form-control"})
+    use_alt_delivery_address = StringField(validators=[InputRequired()], render_kw={"id": "use_alt_delivery_address", "style": "display: none", "value": "false"})
     payment_method = StringField(validators=[InputRequired()], render_kw={"id": "payment_method_field", "style": "display: none"})
     products_as_dict = StringField(validators=[InputRequired()], render_kw={"id": "products_field", "style": "display: none"})
     submit = SubmitField("Bestellung bestätigen und abschließen",
