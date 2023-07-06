@@ -26,6 +26,13 @@ def load_user(customer_id):
     return get_customer_by_id(customer_id)  # get this data from database
 
 
+@app.template_filter()
+def currency_format(value):
+    value = float(value)
+    value = round(value, 2)
+    return "{:,.2f} €".format(value).replace(".", ",")
+
+
 @app.route('/')
 def home():
     return redirect(url_for("shop"))
@@ -207,8 +214,12 @@ def orders():
     orders_of_user = get_customer_orders_by_customer_id(current_user_id)
     for order in orders_of_user:
         order_id = order["order_id"]
-        products_of_order = get_customer_order_product_by_customer_order_id(order_id)
+        products_of_order = get_customer_order_product_with_product_by_customer_order_id(order_id)
         order["products"] = products_of_order
+        if order["recipient_id"] == order["customer_id"]:  # recipient is same as customer
+            order["delivery_data"] = get_customer_with_address_by_id(order["customer_id"])[0]
+        else:
+            order["delivery_data"] = get_customer_with_address_by_id(order["customer_id"])  # TODO chnage this to correct recipient
     print(orders_of_user)
 
     return render_template("orders.html", orders=orders_of_user)

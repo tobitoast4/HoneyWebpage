@@ -3,6 +3,10 @@
     margin-right: 0
 }
 
+.page-container {
+    padding: 0 15px 0 15px
+}
+
 .page-background {
     background-color: #f7f7f7
 }
@@ -45,6 +49,12 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     padding: 20px 5% 20px 5%
 }
 
+.orders-container {
+    margin-top: 20px;
+    border-radius: 0;
+    padding: 3rem 10px 3rem 10px
+}
+
 @media screen and (min-width: 992px) {
     .main-page-padding {
         margin-left: 10%;
@@ -53,6 +63,12 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
     .register-container {
         padding: 20px 20% 20px 20%
+    }
+
+    .orders-container {
+        margin-top: 20px;
+        border-radius: 0;
+        padding: 3rem 2% 3rem 2%
     }
 }
 
@@ -64,6 +80,12 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
     .register-container {
         padding: 20px 25% 20px 25%
+    }
+
+    .orders-container {
+        margin-top: 20px;
+        border-radius: 0;
+        padding: 3rem 4% 3rem 4%
     }
 }
 

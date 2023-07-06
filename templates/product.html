@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div style="margin: 0px">
-    <div class="container">
+    <div class="page-container">
         <div class="row">
             <div class="col-md">
                 <!-- Top div with sort by and search -->
@@ -20,7 +20,7 @@
                                 </h2>
                                 <h3>
                                     <div class="d-flex justify-content-start">
-                                        <span class="badge" style="background-color: #d18c09" id="preis">{{ product[0]['price'] }} €</span>
+                                        <span class="badge" style="background-color: #d18c09" id="preis">{{ product[0]['price'] | currency_format }}</span>
                                         <div style="font-size: small">1)</div>
                                         <br />
                                     </div>

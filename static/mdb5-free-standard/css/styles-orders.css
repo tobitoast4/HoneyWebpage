@@ -1,0 +1,36 @@
+.orders-product-name {
+    padding-top: 7px;
+    font-size: 15px
+}
+
+.orders-product-price {
+    padding-top: 7px;
+    margin-left: 0;
+    font-size: 14px
+}
+
+@media screen and (min-width: 768px) {
+    .orders-product-name {
+        padding-top: 7px;
+        font-size: 18px
+    }
+
+    .orders-product-price {
+        padding-top: 7px;
+        margin-left: 5%;
+        font-size: 16px
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .orders-product-name {
+        padding-top: 7px;
+        font-size: 20px
+    }
+
+    .orders-product-price {
+        padding-top: 7px;
+        margin-left: 5%;
+        font-size: 18px
+    }
+}

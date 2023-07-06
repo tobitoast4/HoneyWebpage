@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div style="margin: 0px">
-    <div class="container">
+    <div class="page-container">
         <div class="row">
             <div class="col-md">
                 <!-- Top div with sort by and search -->
@@ -80,16 +80,9 @@
                             <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                 <div class='p-5 text-center bg-image' style="background-image: url('./static/img/{{ p["product_id"] }}.webp'); height: 200px"/>
                                 <div style='position:absolute; top: 0; right: 0; margin: 20px'>
-                                    <span id="price_badge_{{ p['product_id'] }}" class='badge' style='background-color: #d18c09; float: right; font-size:larger'></span>
+                                    <span id="price_badge_{{ p['product_id'] }}" class='badge' style='background-color: #d18c09; float: right; font-size:larger'>{{ p["price"] | currency_format }}</span>
                                 </div>
-                                <script>
-                                    let price_float_{{ p['product_id'] }} = {{ p["price"] }};
-                                    let price_str_{{ p['product_id'] }} = (Math.round(price_float_{{ p['product_id'] }} * 100) / 100).toFixed(2).replace(".", ",");
-                                    price_str_{{ p['product_id'] }} = price_str_{{ p['product_id'] }} + " €";
-                                    document.getElementById("price_badge_{{ p['product_id'] }}").innerHTML = price_str_{{ p['product_id'] }};
-                                </script>
                             </div>
-                            <a href="/product?id={{ p['product_id'] }}">
                             <a href="/product?id={{ p['product_id'] }}">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
                             </a>

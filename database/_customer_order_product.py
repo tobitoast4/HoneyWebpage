@@ -32,10 +32,11 @@ def add_new_customer_order_product(customer_order_id, product_id, amount, price_
     conn.commit()
 
 
-def get_customer_order_product_by_customer_order_id(customer_order_id):
+def get_customer_order_product_with_product_by_customer_order_id(customer_order_id):
     cur.execute(f"""
         SELECT *
         From customer_order_product
+        LEFT JOIN product ON customer_order_product.product_id = product.product_id
         WHERE customer_order_id={customer_order_id};
     """)
 

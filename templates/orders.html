@@ -1,19 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <div style="margin: 0px">
-    <div class="container">
+    <div class="page-container">
         <div class="row">
             <div class="col-md">
                 <!-- Top div with sort by and search -->
-                <div class="card" style="margin-top: 20px; border-radius: 0; padding: 3rem">
-
-
+                <div class="card orders-container">
                     <h3>Bestellungen</h3>
 
-
                     <div class="accordion" id="accordionExample">
-
-
                         {% for order in orders %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading_{{ order['order_id'] }}">
@@ -24,17 +19,17 @@
                                     aria-expanded="false"
                                     aria-controls="collapse_{{ order['order_id'] }}">
                                     <div class="row" style="width: 100%">
-                                        <div class="col-8">
+                                        <div class="col-lg-8 col-md-7 col-6">
                                             Bestellung vom {{ order['order_timestamp'] }}
                                         </div>
-                                        <div class="col-4 d-flex justify-content-end">
-                                            Status: {{ order['order_state_id'] }}
+                                        <div class="col-lg-4 col-md-5 col-6 d-flex justify-content-end">
+                                            Status: {{ order['order_state_description'] }}
                                         </div>
                                     </div>
                                 </button>
                             </h2>
                             <div id="collapse_{{ order['order_id'] }}" class="accordion-collapse collapse" aria-labelledby="heading_{{ order['order_id'] }}" data-mdb-parent="#accordionExample">
-                                <div class="accordion-body">
+                                <div class="accordion-body" style="padding: 10px 1% 10px 1%">
                                     <div class="row">
                                         <div class="col-lg-8 col-sm-8 col-7">
                                             <h6 style="padding-top: 10px; padding-left: 20px">Produkt </h6>
@@ -49,24 +44,28 @@
                                     <div style="height: 2px; background-color: gainsboro"></div>
 
                                     <ul class="list-group list-group-flush" id="list_of_elements_in_cart">
+                                        {% set price_total = namespace(value=0) %}
                                         {% for product in order["products"] %}
-                                        <li class="list-group-item">
+                                            {% set price_total.value = price_total.value + (product["price_single"] * product["amount"]) %}
+                                        <li class="list-group-item" style="padding: 5px 1% 5px 1%">
                                             <div class="row">
-                                                <div class="col-lg-8 col-sm-8 col-7">
+                                                <div class="col-lg-8 col-sm-9 col-8">
                                                     <div class="row">
                                                         <div class="col-lg-2 col-3 d-md-block d-none">
-                                                            <img src="../img/' . ($packung_id) . '.png" height="60px" />
+                                                            <a href="/product?id={{ product['product_id'] }}">
+                                                                <img src="static/img/{{ product['product_id'] }}.webp" height="60px" />
+                                                            </a>
                                                         </div>
                                                         <div class="col-lg-10 col-md-9 col-12 d-flex align-items-center">
-                                                            <h5 style="padding-top: 7px">($produktbezeichnung){{ product["product_id"] }}</h5>
+                                                            <h5 class="orders-product-name">{{ product["name"] }}</h5>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-sm-2 col-3 d-flex align-items-center">
-                                                    <h6 style="padding-top: 7px; margin-left: 5%">{{ product["amount"] }}</h6>
+                                                <div class="col-lg-2 col-sm-1 col-2 d-flex align-items-center">
+                                                    <h6 class="orders-product-price">{{ product["amount"] }}</h6>
                                                 </div>
                                                 <div class="col-lg-2 col-sm-2 col-2 d-flex align-items-center justify-content-end">
-                                                    <h6 style="padding-top: 7px; margin-left: 5%">Single {{ product["price_single"] }} €</h6>
+                                                    <h6 class="orders-product-price">{{ (product["price_single"] * product["amount"]) | currency_format }}</h6>
                                                 </div>
                                             </div>
                                         </li>
@@ -75,81 +74,57 @@
 
                                     <div style="height: 1px; background-color: gainsboro"></div>
                                     <div class="row" style="padding: 2% 2%; font-size: small">
-                                        <div class="col-md-3">
+                                        <div class="col-xl-3 col-12">
                                             <div class="row">
                                                 <div class="col-6">
-                                                    Bestelldatum:
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    {{ order['order_timestamp'][:10] }}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    Versanddatum:
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($versanddatum)
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
+                                                    Bestelldatum: <br/>
+                                                    Versanddatum: <br/>
                                                     Bestell-Nr:
                                                 </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($bestellung_id)
+                                                <div class="col-6 d-flex justify-content-end" style="text-align: right">
+                                                    {{ order['order_timestamp'][:10] }} <br/>
+                                                    {% if order['shipping_timestamp'] is not none %}
+                                                        {{ order['shipping_timestamp'] }}
+                                                    {% else %}
+                                                        ausstehend
+                                                    {% endif %} <br/>
+                                                    {{ '%05d' % order['order_id'] }}-{{ '%04d' % order['customer_id'] }}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-1 d-flex justify-content-center">
-                                            <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
-                                        </div>
-                                        <div class="col-md-3">
+                                        <div class="col-xl-5 col-12">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-xl-1 justify-content-center">
+                                                    <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
+                                                </div>
+                                                <div class="col-xl-5 col-5">
                                                     Lieferadresse:
                                                 </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($strasse_hausnummer)
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($plz_stadt)
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($lieferadresse_land)
+                                                <div class="col-xl-6 col-7 d-flex justify-content-end" style="text-align: right">
+                                                    {{ order['delivery_data']['firstname'] }} {{ order['delivery_data']['lastname'] }} <br/>
+                                                    {{ order['delivery_data']['email_address'] }} <br/>
+                                                    {{ order['delivery_data']['phone_number'] }} <br/>
+                                                    {{ order['delivery_data']['street'] }} {{ order['delivery_data']['house_number'] }}, {{ order['delivery_data']['postal_code'] }} {{ order['delivery_data']['city'] }} <br/>
+                                                    {{ order['delivery_data']['country'] }} {{ order['delivery_data']['state'] }}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-1 d-flex justify-content-center">
-                                            <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
-                                        </div>
-                                        <div class="col-md-4">
+                                        <div class="col-xl-4 col-12">
                                             <div class="row">
-                                                <div class="col-6">
-                                                    Gesamtpreis:
+                                                <div class="col-xl-1 justify-content-center">
+                                                    <div style="height: 100%; width: 1px; background-color: gainsboro"></div>
                                                 </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($preis_summe) €
+                                                <div class="col-xl-5 col-5">
+                                                    Gesamtpreis: <br/>
+                                                    Davon MwSt (19%): <br/>
+                                                    Versandkosten: <br/>
+                                                    Bezahlmethode: <br/> <br/>
                                                 </div>
-                                                <div class="col-6">
-                                                    Davon MwSt (19%):
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($preis_mwst) €
-                                                </div>
-                                                <div class="col-6">
-                                                    Versandkosten:
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    ($versandkosten) €
+                                                <div class="col-xl-6 col-7 justify-content-end" style="text-align: right">
+                                                    {{ price_total.value | currency_format }} <br/>
+                                                    {{ (price_total.value * 0.19) | currency_format }} <br/>
+                                                    {{ order['delivery_cost'] | currency_format }} <br/>
+                                                    {{ order['payment_method_description'] }}
                                                 </div>
                                             </div>
                                         </div>
@@ -165,7 +140,11 @@
                         </div>
                         {% endfor %}
 
-
+                        <br/>
+                        <br/>
+                        <div style="font-size: 13px">
+                            Haben Sie Fragen zu einer Ihrer Bestellungen? Kontaktieren Sie uns!
+                        </div>
 
                     </div>
                 </div>

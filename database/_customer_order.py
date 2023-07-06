@@ -47,8 +47,10 @@ def add_new_customer_order(delivery_cost, customer_id, recipient_id, order_state
 
 def get_customer_orders_by_customer_id(customer_id):
     cur.execute(f"""
-        SELECT *
+        SELECT *, os.description as order_state_description, pm.description as payment_method_description
         From customer_order
+        LEFT JOIN order_state os ON customer_order.order_state_id = os.order_state_id
+        LEFT JOIN payment_method pm ON customer_order.payment_method_id = pm.payment_method_id
         WHERE customer_id={customer_id}
         ORDER BY order_timestamp DESC;
     """)
