@@ -124,8 +124,10 @@ def buy():
         insert_new_order(current_user_id, recipient_id, order_state_id, payment_method, products_as_dict)
 
         return redirect(url_for("order_finished"))
+    user = get_customer_with_address_by_id(current_user.id)[0]
+    print(user)
     payment_methods = get_all_payment_methods()
-    resp = make_response(render_template("buy.html", form=form, payment_methods=payment_methods))
+    resp = make_response(render_template("buy.html", form=form, payment_methods=payment_methods, user=user))
     product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
     resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
     return resp

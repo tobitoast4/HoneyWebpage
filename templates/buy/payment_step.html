@@ -2,7 +2,7 @@
     <div class="card itemCard">
         <ul class="list-group list-group-flush" id="list_of_elements_in_chart">
             {% for p in payment_methods %}
-                <li class="list-group-item itemCardPayment" id="payment_method_{{ p['payment_method_id'] }}" onclick="selectPaymentMethod('{{ p['payment_method_id'] }}')">
+                <li class="list-group-item itemCardPayment" id="payment_method_{{ p['payment_method_id'] }}" onclick="selectPaymentMethod('{{ p['payment_method_id'] }}', '{{ p['description'] }}')">
                     <div class="row">
                         <div class="col-md-5 col-10" style="padding-top: 5px">
                             <img src="static/img/payment_icons/{{ p['payment_method_id'] }}.png" height="45px" />
@@ -26,7 +26,7 @@
     </div>
 
     <script>
-        function selectPaymentMethod(new_payment_method) {
+        function selectPaymentMethod(new_payment_method_id, new_payment_method_name) {
             var payment_methods = document.querySelectorAll('[id^="payment_method_"]');
             for (var payment_method of payment_methods) {
                 document.getElementById(payment_method.id).setAttribute("class", "list-group-item itemCardPayment");
@@ -38,10 +38,12 @@
             }
 
 
-            document.getElementById('payment_method_' + new_payment_method).setAttribute("class", "list-group-item itemCardPaymentSelected");
-            document.getElementById('payment_checkmark_' + new_payment_method).setAttribute("style", "padding-top: 3px; margin-right: 3%; display: block");
+            document.getElementById('payment_method_' + new_payment_method_id).setAttribute("class", "list-group-item itemCardPaymentSelected");
+            document.getElementById('payment_checkmark_' + new_payment_method_id).setAttribute("style", "padding-top: 3px; margin-right: 3%; display: block");
 
-            document.getElementById('payment_method_field').value = new_payment_method;
+            document.getElementById('payment_method_field').value = new_payment_method_id;
+
+            document.getElementById('finish_step_payment_method').innerHTML = new_payment_method_name;
         }
     </script>
 </div>

@@ -43,18 +43,17 @@
                         {{ form.hidden_tag() }}
                         <div id="stepper_container" class="register-container">
                             <div id="step_1" style="display: block">
-                                <div style="height: 650px">
+                                <div style="min-height: 547px">
                                     {% include 'buy/delivery_step.html' %}
                                 </div>
                             </div>
                             <div id="step_2" style="display: none">
-                                <div style="height: 650px">
+                                <div style="min-height: 650px">
                                     {% include 'buy/payment_step.html' %}
                                 </div>
                             </div>
                             <div id="step_3" style="display: none">
-                                <div style="height: 650px">
-                                    <div style="height: 130px"></div>
+                                <div style="min-height: 650px">
                                     {% include 'buy/finish_step.html' %}
                                 </div>
                             </div>
@@ -102,6 +101,8 @@
                                     document.getElementById('button_confirm_order').setAttribute("style", "border-color:#d18c09; background-color: #d18c09; color: white");
                                 }
                             }
+
+                            fillFinishStepDeliveryAddress();
                         }
 
                         function previousStep() {
@@ -125,6 +126,7 @@
                     </script>
 
                     <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/cart.js' )}}"></script>
+                    <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/buy.js' )}}"></script>
                     <script>
                         var cart_cookie = JSON.parse(getCookie("cart_cookie"));
                         console.log(cart_cookie);
