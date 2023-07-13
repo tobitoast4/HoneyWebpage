@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='mdb5-free-standard/css/calendar.css' )}}">
+<script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/calendar.js' )}}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit">
+<div style="margin: 0px">
+    <div class="page-container">
+        <div class="row">
+            <div class="col-md">
+                <!-- Top div with sort by and search -->
+                <div class="card" style="margin-top: 20px; border-radius: 25px; overflow: hidden">
+                    <div class="row">
+                        <div class="col-md-3" style="background-color: #d18c09">
+                            <div style="text-align: center; line-height: 1.2; color: white">
+                                <div style="height: 40px"></div>
+                                <div style="font-size: 20px; margin-left: 3%">2023</div>
+                                <div style="font-size: 30px; margin-left: 3%">August</div>
+                                <div style="font-size: 70px; font-weight: 600; margin-left: 2%">20</div>
+                                <div style="height: 1px; width: 70%; background-color: white; margin-left: 16%"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="calendar-base">
+                                <div class="year">
+                                    <ul>
+                                        <li style="display: inline-block" class="previous-year-button" onclick="selectYearAndRefresh(-1)">&#10094;</li>
+                                        <li style="display: inline-block" id="selected_year">2023</li>
+                                        <li style="display: inline-block" class="next-year-button" onclick="selectYearAndRefresh(1)">&#10095;</li>
+                                        <script>
+                                            function selectYearAndRefresh(y){
+                                                year = year + y;
+                                                document.getElementById("selected_year").innerHTML = year;
+                                                generateCalendarDates();
+                                            }
+                                        </script>
+                                    </ul>
+
+                                </div>
+                                <ul class="months">
+                                    <li class="month" id="month_heading_0" onclick="selectMonthAndRefresh(0)">Jan</li>
+                                    <li class="month" id="month_heading_1" onclick="selectMonthAndRefresh(1)">Feb</li>
+                                    <li class="month" id="month_heading_2" onclick="selectMonthAndRefresh(2)">Mär</li>
+                                    <li class="month" id="month_heading_3" onclick="selectMonthAndRefresh(3)">Apr</li>
+                                    <li class="month" id="month_heading_4" onclick="selectMonthAndRefresh(4)">Mai</li>
+                                    <li class="month" id="month_heading_5" onclick="selectMonthAndRefresh(5)">Jun</li>
+                                    <li class="month" id="month_heading_6" onclick="selectMonthAndRefresh(6)">Jul</li>
+                                    <li class="month" id="month_heading_7" onclick="selectMonthAndRefresh(7)">Aug</li>
+                                    <li class="month" id="month_heading_8" onclick="selectMonthAndRefresh(8)">Sep</li>
+                                    <li class="month" id="month_heading_9" onclick="selectMonthAndRefresh(9)">Okt</li>
+                                    <li class="month-active" id="month_heading_10" onclick="selectMonthAndRefresh(10)">Nov</li>
+                                    <li class="month" id="month_heading_11" onclick="selectMonthAndRefresh(11)">Dez</li>
+                                    <script>
+                                        function selectMonthAndRefresh(m){
+                                            month = m;
+                                            generateCalendarDates();
+
+                                            var month_headings = document.querySelectorAll('[id^="month_heading_"]');
+                                            for (var month_heading of month_headings) {
+                                                document.getElementById(month_heading.id).setAttribute("class", "month");
+                                            }
+                                            document.getElementById("month_heading_" + m).setAttribute("class", "month-active");
+                                        }
+                                    </script>
+                                </ul>
+                                <div style="height: 1px; width: 100%; background-color: #aaa"></div>
+                                <ul class="weekdays">
+                                    <li class="week-day">MO</li>
+                                    <li class="week-day">DI</li>
+                                    <li class="week-day">MI</li>
+                                    <li class="week-day">DO</li>
+                                    <li class="week-day">FR</li>
+                                    <li class="week-day">SA</li>
+                                    <li class="week-day">SO</li>
+                                </ul>
+                                <ul class="days" id="calendar_days">
+                                    <script>
+                                        function generateCalendarDates(){
+                                            document.getElementById("calendar_days").innerHTML = "";
+                                            let days = getFullMonthView(month, year);  // these variables are in calendar.js
+
+                                            for (var day of days){
+                                                let li = document.createElement("li");
+                                                if (day.getTime() === new Date().setHours(0,0,0,0)) {
+                                                    li.innerHTML = "<span class='active'>" + String(day.getDate()).padStart(2, "0"); + "</span>";
+                                                } else if (day.getMonth() != month) {
+                                                    li.innerHTML = "<span style='color: #ddd'>" + String(day.getDate()).padStart(2, "0"); + "</span>";
+                                                } else {
+                                                    li.innerHTML = "<span>" + String(day.getDate()).padStart(2, "0"); + "</span>";
+                                                }
+                                                document.getElementById("calendar_days").appendChild(li);
+                                            }
+                                        }
+
+                                        generateCalendarDates();
+                                    </script>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 20px; border-radius: 0">
+                    <h3>Calendar</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

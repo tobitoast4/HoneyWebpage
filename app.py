@@ -38,6 +38,11 @@ def home():
     return redirect(url_for("shop"))
 
 
+@app.route('/course')
+def course():
+    return render_template("course.html")
+
+
 @app.route('/about')
 def about():
     return render_template("about.html")
