@@ -1,9 +1,9 @@
 .calendar-base {
   font-family: 'Kanit', sans-serif;
+  /*font-family: Verdana, sans-serif;*/
 }
 
 ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
 
 .year {
     text-align: right;
@@ -21,7 +21,7 @@ body {font-family: Verdana, sans-serif;}
 
 .months li {
   display: inline-block;
-  width: 7.69%;
+  width: 7.5%;
   color: #666;
   text-align: center;
 }
@@ -65,7 +65,7 @@ body {font-family: Verdana, sans-serif;}
 
 .weekdays li {
   display: inline-block;
-  width: 13.6%;
+  width: 13.3%;
   color: #666;
   text-align: center;
 }
@@ -89,7 +89,7 @@ body {font-family: Verdana, sans-serif;}
 .days li {
   list-style-type: none;
   display: inline-block;
-  width: 13.6%;
+  width: 13.3%;
   text-align: center;
   margin-right: 3px;
   font-size: 16px;
@@ -163,4 +163,30 @@ body {font-family: Verdana, sans-serif;}
   border-radius: 10px;
   position: absolute;
   margin-left: 32px
+}
+
+.calendar-date-card {
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid #fff;
+}
+
+.calendar-date-card:hover {
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid #d18c09;
+}
+
+
+.outer {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.outer div {
+    display: inline-block;
+}
+
+.outer div div {
+    display: block;
 }
