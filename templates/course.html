@@ -27,7 +27,7 @@
                                         <li style="display: inline-block" id="selected_year">2023</li>
                                         <li style="display: inline-block" class="next-year-button" onclick="selectYearAndRefresh(1)">&#10095;</li>
                                         <script>
-                                            function selectYearAndRefresh(y){
+                                            function selectYearAndRefresh(y) {
                                                 year = year + y;
                                                 document.getElementById("selected_year").innerHTML = year;
                                                 generateCalendarDates();
@@ -47,7 +47,7 @@
                                     <li class="month" id="month_heading_7" onclick="selectMonthAndRefresh(7)">Aug</li>
                                     <li class="month" id="month_heading_8" onclick="selectMonthAndRefresh(8)">Sep</li>
                                     <li class="month" id="month_heading_9" onclick="selectMonthAndRefresh(9)">Okt</li>
-                                    <li class="month-active" id="month_heading_10" onclick="selectMonthAndRefresh(10)">Nov</li>
+                                    <li class="month" id="month_heading_10" onclick="selectMonthAndRefresh(10)">Nov</li>
                                     <li class="month" id="month_heading_11" onclick="selectMonthAndRefresh(11)">Dez</li>
                                     <script>
                                         function selectMonthAndRefresh(m){
@@ -83,7 +83,7 @@
                                                 if (day.getTime() === new Date().setHours(0,0,0,0)) {
                                                     li.innerHTML = "<span class='active'>" + String(day.getDate()).padStart(2, "0"); + "</span>";
                                                 } else if (day.getMonth() != month) {
-                                                    li.innerHTML = "<span style='color: #ddd'>" + String(day.getDate()).padStart(2, "0"); + "</span>";
+                                                    li.innerHTML = "<span style='color: #ddd'><div class='calendar-event'></div>" + String(day.getDate()).padStart(2, "0"); + "</span>";
                                                 } else {
                                                     li.innerHTML = "<span>" + String(day.getDate()).padStart(2, "0"); + "</span>";
                                                 }
@@ -92,6 +92,7 @@
                                         }
 
                                         generateCalendarDates();
+                                        selectMonthAndRefresh(month);  // passing "global" variable 'month' here
                                     </script>
 
                                 </ul>
@@ -101,6 +102,7 @@
                 </div>
                 <div class="card" style="margin-top: 20px; border-radius: 0">
                     <h3>Calendar</h3>
+
                 </div>
             </div>
         </div>

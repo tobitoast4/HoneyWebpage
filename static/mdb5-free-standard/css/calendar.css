@@ -91,26 +91,41 @@ body {font-family: Verdana, sans-serif;}
   display: inline-block;
   width: 13.6%;
   text-align: center;
-  margin-bottom: 15px;
   margin-right: 3px;
   font-size: 16px;
   color: #777;
 }
 
+/* The Span for inactive elements */
+.days li span {
+  padding-top: 10px;
+  border-radius: 100px;
+  border: 1px solid #00d18c09; /* transparent border */
+  display: inline-block;
+  height: 46px;
+  width: 46px;
+}
+
 /* Highlight the hovered day */
 .days li span:hover {
-  padding: 9px 12px 9px 12px;
+  padding-top: 10px;
   border-radius: 100px;
   border: 1px solid #d18c09;
   cursor: pointer;
+  display: inline-block;
+  height: 46px;
+  width: 46px;
 }
 
 /* Highlight the "current" day */
 .days li .active {
-  padding: 10px 15px 10px 15px;
+  padding-top: 10px;
   border-radius: 100px;
   background: #d18c09;
   color: white !important;
+  display: inline-block;
+  height: 46px;
+  width: 46px;
 }
 
 
@@ -139,4 +154,13 @@ body {font-family: Verdana, sans-serif;}
 
 .next-year-button:hover {
   cursor: pointer;
+}
+
+.calendar-event {
+  background: #d18c09;
+  height: 5px;
+  width: 5px;
+  border-radius: 10px;
+  position: absolute;
+  margin-left: 32px
 }
