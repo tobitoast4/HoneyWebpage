@@ -3,6 +3,7 @@ from flask_login import login_user, LoginManager, login_required, logout_user, c
 from flask_bcrypt import Bcrypt
 from wtforms.validators import ValidationError
 
+import database._course
 from user import User
 
 import urllib.parse
@@ -40,12 +41,15 @@ def home():
 
 @app.route('/course')
 def course():
-    return render_template("course.html")
+    resp = make_response(render_template("pages/course.html"))
+    courses_data_str = str(get_all_courses()).replace(" ", "").replace("'", '"')
+    resp.set_cookie("courses_data", urllib.parse.quote_plus(courses_data_str))
+    return resp
 
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template("pages/about.html")
 
 
 @app.route('/shop')
@@ -76,7 +80,7 @@ def shop():
     products = get_products_filtered(order, min_value, max_value, selected_categories, search)
     categories = get_all_product_categories()
 
-    return render_template("shop.html", products=products, categories=categories, orderBy=order,
+    return render_template("pages/shop.html", products=products, categories=categories, orderBy=order,
                            search=search, selected_categories=selected_categories, silder_price_data=silder_price_data)
 
 
@@ -84,7 +88,7 @@ def shop():
 def product():
     product_id = request.args.get('id', default=1, type=int)
     p = get_one_product(product_id)
-    return render_template("product.html", product=p)
+    return render_template("pages/product.html", product=p)
 
 
 @app.route('/cart', methods=["GET", "POST"])
@@ -92,7 +96,7 @@ def cart():
     form = BuyNowForm()
     if form.validate_on_submit():
         return redirect(url_for("buy"))
-    resp = make_response(render_template("cart.html", form=form, delivery_cost=DEFAULT_DELIVERY_COST))
+    resp = make_response(render_template("pages/cart.html", form=form, delivery_cost=DEFAULT_DELIVERY_COST))
     product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
     resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
     return resp
@@ -132,7 +136,7 @@ def buy():
     user = get_customer_with_address_by_id(current_user.id)[0]
     print(user)
     payment_methods = get_all_payment_methods()
-    resp = make_response(render_template("buy.html", form=form, payment_methods=payment_methods, user=user))
+    resp = make_response(render_template("pages/buy.html", form=form, payment_methods=payment_methods, user=user))
     product_data_str = str(get_product_data_for_cart()).replace(" ", "").replace("'", '"')
     resp.set_cookie("product_data", urllib.parse.quote_plus(product_data_str))
     return resp
@@ -141,7 +145,7 @@ def buy():
 @app.route('/order_finished')
 @login_required
 def order_finished():
-    return render_template("order_finished.html")
+    return render_template("pages/order_finished.html")
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -170,7 +174,15 @@ def register():
         flash("Sie haben sich erfolgreich registriert! Sie können sich jetzt anmelden.")
         return redirect(url_for("home"))
 
-    return render_template("register.html", form=form)
+    return render_template("pages/register.html", form=form)
+
+
+@app.route('/is_email_available', methods=["GET"])
+def is_email_available():
+    email = request.args.get('email')
+    if get_customer_by_email(email) is not None:
+        return '<div style="font-size: 13px; color: red; margin-bottom: 15px">Die eingegebene Email-Adresse wird bereits verwendet. Bitte gib eine andere ein.</div>'
+    return '<div style="margin-bottom: 15px"></div>'
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -197,7 +209,7 @@ def login():
             return redirect(url_for(next_page[1:]))
         flash(f"Sie haben sich erfolgreich eingeloggt!")
         return redirect(url_for("home"))
-    return render_template("login.html", form=form)
+    return render_template("pages/login.html", form=form)
 
 
 @app.route("/logout", methods=["GET"])
@@ -215,7 +227,7 @@ def logout():
 def profile():
     user = get_customer_by_id(session['user_id'])
     address = get_address_by_id(user.default_address_id)
-    return render_template("profile.html", user=user, address=address)
+    return render_template("pages/profile.html", user=user, address=address)
 
 
 @app.route('/orders')
@@ -231,15 +243,14 @@ def orders():
             order["delivery_data"] = get_customer_with_address_by_id(order["customer_id"])[0]
         else:
             order["delivery_data"] = get_recipient_with_address_by_id(order["recipient_id"])[0]
-    print(orders_of_user)
 
-    return render_template("orders.html", orders=orders_of_user)
+    return render_template("pages/orders.html", orders=orders_of_user)
 
 
 @app.route('/settings')
 @login_required
 def settings():
-    return render_template("settings.html")
+    return render_template("pages/settings.html")
 
 
 if __name__ == '__main__':

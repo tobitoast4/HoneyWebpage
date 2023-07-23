@@ -1,17 +1,46 @@
+var courses_data = JSON.parse(getCookie("courses_data"));
+
 var currentDate = new Date();
 
 var year = currentDate.getFullYear();
 var month = currentDate.getMonth();
 
 
+function getCourseById(course_id) {
+    for (var course in courses_data) {
+        course = courses_data[course];
+
+        if (course["course_id"] === course_id) {
+            return course;
+        }
+    }
+
+    return null;
+}
+
+
+function getEventsOfGivenDay(day_in_unix_time) {
+    var events = [];
+    for (var course in courses_data) {
+        course = courses_data[course];
+        let course_day_unix_time = new Date(course["date"]).setHours(0,0,0,0);
+
+        if (course_day_unix_time === day_in_unix_time) {
+            events.push(course);
+        }
+    }
+
+    return events;
+}
+
 function getAllDaysInMonth(month, year) {  // month starts with 0 (0 => january)
-  var date = new Date(year, month, 1);
-  var days = [];
-  while (date.getMonth() === month) {
-    days.push(new Date(date));
-    date.setDate(date.getDate() + 1);
-  }
-  return days;
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
+        days.push(new Date(date));
+        date.setDate(date.getDate() + 1);
+    }
+    return days;
 }
 
 function getLastWeekOfPreviousMonth(month, year) {
@@ -70,6 +99,74 @@ function getFullMonthView(month, year) {
     }
 
     return days;
+}
+
+function getDayName(dayNumber) {
+    switch(dayNumber) {
+          case 0:
+                return "Sonntag";
+          case 1:
+                return "Montag";
+          case 2:
+                return "Dienstag";
+          case 3:
+                return "Mittwoch";
+          case 4:
+                return "Donnerstag";
+          case 5:
+                return "Freitag";
+          case 6:
+                return "Samstag";
+          default:
+                return "DayNameError";
+    }
+}
+
+function getMonthName(monthNumber) {
+    switch(monthNumber) {
+          case 0:
+                return "Januar";
+          case 1:
+                return "Februar";
+          case 2:
+                return "März";
+          case 3:
+                return "April";
+          case 4:
+                return "Mai";
+          case 5:
+                return "Juni";
+          case 6:
+                return "Juli";
+          case 7:
+                return "August";
+          case 8:
+                return "September";
+          case 9:
+                return "Oktober";
+          case 10:
+                return "November";
+          case 11:
+                return "Dezember";
+          default:
+                return "MonthNameError";
+    }
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "{}";
 }
 
 

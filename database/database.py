@@ -1,6 +1,7 @@
 import time
 
 from database._address import *
+from database._course import *
 from database._customer import *
 from database._customer_order import *
 from database._customer_order_product import *
@@ -46,6 +47,7 @@ def create_tables():
     create_table_product()
     create_table_product_category()
     create_table_recipient()
+    create_table_course()
 
 
 def insert_default_values():
@@ -53,6 +55,7 @@ def insert_default_values():
     insert_default_order_states()
     insert_default_product_categories()
     insert_default_products()
+    insert_default_courses()
 
 
 if get_amount_tables_in_db() <= 0:

@@ -17,13 +17,15 @@
   </head>
   <body>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Start your project here-->
-    <div class="main-page-padding page-background" style="height: 100%">
-      {% include 'nav.html' %}
-      {% block body %}{% endblock %}
-      {% include 'footer.html' %}
-    </div>
+      <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Start your project here-->
+      <div class="main-page-padding page-background" style="height: 100%">
+        {% include 'elements/nav.html' %}
+        {% block body %}{% endblock %}
+        {% include 'elements/footer.html' %}
+      </div>
 
 
     <!-- MDB -->

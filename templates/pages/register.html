@@ -26,9 +26,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-outline" style="margin-bottom: 15px">
-                                {{ form.email }}
+                            <div class="form-outline">
+                                <input type="email" id="email" name="email" class="form-control"
+                                       hx-get="/is_email_available" hx-include="[name='email']" hx-trigger="keyup changed delay:100ms"
+                                       hx-target="#email_available" hx-swap="innerHTML" />
                                 <label class="form-label" for="typeText">E-Mail-Adresse*</label>
+                                <i class="fas fa-check" style="color: green; position: absolute; right: 10px; top: 10px"></i>
+                            </div>
+                            <div id="email_available">
+                                <div style="margin-bottom: 15px"></div>
                             </div>
                             <div class="row">
                                 <div class="col-11">

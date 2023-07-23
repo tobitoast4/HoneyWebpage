@@ -21,7 +21,7 @@ ul {list-style-type: none;}
 
 .months li {
   display: inline-block;
-  width: 7.5%;
+  width: 15.5%;
   color: #666;
   text-align: center;
 }
